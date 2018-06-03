@@ -1,7 +1,7 @@
-# Workshell.FileFingerprint
+# Workshell.FileFormats
 
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/Workshell/file-formays/blob/master/license.txt)
-[![NuGet](https://img.shields.io/nuget/v/Workshell.PE.svg)](https://www.nuget.org/packages/Workshell.FileFormats/)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/Workshell/file-formats/blob/master/license.txt)
+[![NuGet](https://img.shields.io/nuget/v/Workshell.FileFormats.svg)](https://www.nuget.org/packages/Workshell.FileFormats/)
 
 A class library for discovering the format of files. Useful when receiving data from end-users when you cannot always rely on
 the content type specified (or trust it).
@@ -238,6 +238,7 @@ We currently use a modified and internalised variant of OpenMCDF for reading som
 The original version of OpenMCDF is available here:
 
 * https://github.com/CodeCavePro/OpenMCDF
+
 
 ## MIT License
 
