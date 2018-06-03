@@ -1,1 +1,0 @@
-dotnet pack ..\src\FileFingerprint\FileFingerprint.csproj -c Release --include-symbols

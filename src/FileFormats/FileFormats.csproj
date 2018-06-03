@@ -14,6 +14,12 @@
     <PackageIconUrl>http://img.workshell.co.uk/logo_128.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/Workshell/file-formats</RepositoryUrl>
     <PackageTags>workshell file format fingerprint signature</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Workshell.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
