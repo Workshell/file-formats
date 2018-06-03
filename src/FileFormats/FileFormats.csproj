@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Workshell.FileFormats</AssemblyName>
+    <RootNamespace>Workshell.FileFormats</RootNamespace>
+    <Authors>Workshell Ltd</Authors>
+    <Company>Workshell Ltd</Company>
+    <Product>Workshell File Formats</Product>
+    <Description>An extensible class library for discovering the format of files and data.</Description>
+    <Copyright>©2018 Workshell Ltd</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Workshell/file-formats/master/license.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Workshell/file-formats</PackageProjectUrl>
+    <PackageIconUrl>http://img.workshell.co.uk/logo_128.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Workshell/file-formats</RepositoryUrl>
+    <PackageTags>workshell file format fingerprint signature</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Scanners\Archives\**" />
+    <EmbeddedResource Remove="Scanners\Archives\**" />
+    <None Remove="Scanners\Archives\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Scanners\Microsoft\OOXml\DotxFingerprint.cs" />
+    <Compile Remove="Scanners\Microsoft\OOXml\OOXmlFingerprint.cs" />
+    <Compile Remove="Scanners\Microsoft\OOXml\XlsAddinFingerprinter.cs" />
+    <Compile Remove="Scanners\Microsoft\OOXml\XlsBinaryFingerprinter.cs" />
+    <Compile Remove="Scanners\Microsoft\OOXml\XlsxFingerprinter.cs" />
+    <Compile Remove="Scanners\Microsoft\OOXml\XltxFingerprinter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Scanners\Archives\BZipFormatScanner.cs" />
+    <Compile Include="Scanners\Archives\CabinetFormatScanner.cs" />
+    <Compile Include="Scanners\Archives\RARFingerprintScanner.cs" />
+    <Compile Include="Scanners\Archives\SevenZipFormatScanner.cs" />
+    <Compile Include="Scanners\Archives\GZipFormatScanner.cs" />
+    <Compile Include="Scanners\Archives\ArchiveFormatScanners.cs" />
+    <Compile Include="Scanners\Archives\ZipFormatScanner.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="OpenMCDF\" />
+  </ItemGroup>
+
+</Project>
