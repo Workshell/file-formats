@@ -64,7 +64,7 @@ namespace Workshell.FileFormats.Scanners.Media
 
             foreach (var signature in _signatures)
             {
-                if (Utils.MatchBytes(job.StartBytes, 8, signature))
+                if (FileFormatUtils.MatchBytes(job.StartBytes, 8, signature))
                 {
                     var fingerprint = new M4AFormat();
 

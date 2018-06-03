@@ -2,7 +2,7 @@
   "profiles": {
     "Demo": {
       "commandName": "Project",
-      "commandLineArgs": "\"D:\\Projects\\Workshell\\File Fingerprint\\samples\\microsoft\\ooxml\\test.docx\""
+      "commandLineArgs": "\"D:\\Projects\\Workshell\\File Formats\\samples\\microsoft\\ooxml\\test.docx\""
     }
   }
 }

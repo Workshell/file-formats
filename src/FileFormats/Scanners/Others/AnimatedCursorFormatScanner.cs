@@ -38,7 +38,7 @@ namespace Workshell.FileFormats.Scanners
             if (!ValidateStartBytes(job))
                 return null;
 
-            var header = Utils.Read<RIFFHeader>(job.StartBytes);
+            var header = FileFormatUtils.Read<RIFFHeader>(job.StartBytes);
 
             if (header.Type != Type)
                 return null;

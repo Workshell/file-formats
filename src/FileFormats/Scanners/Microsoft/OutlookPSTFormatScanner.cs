@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Scanners.Microsoft
         private const uint Magic = 1313096225;
         private const ushort MagicClient = 19795;
 
-        private static readonly int HeaderSize = Utils.SizeOf<Header>();
+        private static readonly int HeaderSize = FileFormatUtils.SizeOf<Header>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct Header
@@ -51,13 +51,13 @@ namespace Workshell.FileFormats.Scanners.Microsoft
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= HeaderSize)
                 return null;
 
-            var header = Utils.Read<Header>(job.StartBytes, 0, HeaderSize);
+            var header = FileFormatUtils.Read<Header>(job.StartBytes, 0, HeaderSize);
 
             if (header.Magic != Magic)
                 return null;

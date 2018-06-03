@@ -30,8 +30,8 @@ namespace Workshell.FileFormats.Scanners.Images
     public class BitmapFormatScanner : ImageFormatScanner
     {
         private static readonly byte?[] BitmapSignature= new byte?[] { 0x42, 0x4D }; // BM
-        private static readonly int BitmapFileHeaderSize = Utils.SizeOf<BitmapFileHeader>();
-        private static readonly int BitmapInfoHeaderSize = Utils.SizeOf<BitmapInfoHeader>();
+        private static readonly int BitmapFileHeaderSize = FileFormatUtils.SizeOf<BitmapFileHeader>();
+        private static readonly int BitmapInfoHeaderSize = FileFormatUtils.SizeOf<BitmapInfoHeader>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct BitmapFileHeader
@@ -68,18 +68,18 @@ namespace Workshell.FileFormats.Scanners.Images
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= (BitmapFileHeaderSize + BitmapInfoHeaderSize))
                 return null;
 
-            var fileHeader = Utils.Read<BitmapFileHeader>(job.StartBytes, 0, BitmapFileHeaderSize);
+            var fileHeader = FileFormatUtils.Read<BitmapFileHeader>(job.StartBytes, 0, BitmapFileHeaderSize);
 
-            if (!Utils.MatchBytes(fileHeader.Signature, BitmapSignature))
+            if (!FileFormatUtils.MatchBytes(fileHeader.Signature, BitmapSignature))
                 return null;
 
-            var infoHeader = Utils.Read<BitmapInfoHeader>(job.StartBytes, BitmapFileHeaderSize, BitmapInfoHeaderSize);
+            var infoHeader = FileFormatUtils.Read<BitmapInfoHeader>(job.StartBytes, BitmapFileHeaderSize, BitmapInfoHeaderSize);
 
             if (infoHeader.Size != BitmapInfoHeaderSize)
                 return null;

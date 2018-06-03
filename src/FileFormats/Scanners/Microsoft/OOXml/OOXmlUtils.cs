@@ -40,7 +40,7 @@ namespace Workshell.FileFormats.Scanners.Microsoft.OOXml
                 return cachedResult;
             }
 
-            var result = Utils.GetFileFromZip(job.Stream, "[Content_Types].xml");
+            var result = FileFormatUtils.GetFileFromZip(job.Stream, "[Content_Types].xml");
 
             job.Cache.Set(cacheKey, result);
 

@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Scanners.Images
         private static readonly byte?[] Signature = new byte?[] { 0xFF, 0xD8 };
         private static readonly byte?[] JFIF = new byte?[] { 0xFF, 0xE0 };
         private static readonly byte?[] EXIF = new byte?[] { 0xFF, 0xE1 };
-        private static readonly int HeaderSize = Utils.SizeOf<JFIFHeader>();
+        private static readonly int HeaderSize = FileFormatUtils.SizeOf<JFIFHeader>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct JFIFHeader
@@ -60,20 +60,20 @@ namespace Workshell.FileFormats.Scanners.Images
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= HeaderSize)
                 return null;
 
-            var header = Utils.Read<JFIFHeader>(job.StartBytes, 0, HeaderSize);
+            var header = FileFormatUtils.Read<JFIFHeader>(job.StartBytes, 0, HeaderSize);
 
-            if (!Utils.MatchBytes(header.SOI, Signature))
+            if (!FileFormatUtils.MatchBytes(header.SOI, Signature))
                 return null;
 
-            var exif = Utils.MatchBytes(header.App, EXIF);
+            var exif = FileFormatUtils.MatchBytes(header.App, EXIF);
 
-            if (!Utils.MatchBytes(header.App, JFIF) && exif)
+            if (!FileFormatUtils.MatchBytes(header.App, JFIF) && exif)
                 return null;
 
             var fingerprint = new JPEGImageFormat(exif);

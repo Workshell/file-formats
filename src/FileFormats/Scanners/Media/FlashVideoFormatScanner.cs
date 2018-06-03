@@ -41,10 +41,10 @@ namespace Workshell.FileFormats.Scanners.Media
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, Signature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, Signature))
                 return null;
 
             if (job.StartBytes[4] != 0x01 && job.StartBytes[4] != 0x04 && job.StartBytes[4] != 0x05)

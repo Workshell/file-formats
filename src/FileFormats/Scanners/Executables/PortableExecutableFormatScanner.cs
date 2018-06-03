@@ -32,10 +32,10 @@ namespace Workshell.FileFormats.Scanners.Executables
         private const ushort DOSMagicNumber = 23117;
         private const uint PEMagicNumber = 17744;
 
-        private static readonly int DOSHeaderSize = Utils.SizeOf<DOSHeader>();
-        private static readonly int FileHeaderSize = Utils.SizeOf<FileHeader>();
-        private static readonly int OptionalHeader32Size = Utils.SizeOf<OptionalHeader32>();
-        private static readonly int OptionalHeader64Size = Utils.SizeOf<OptionalHeader64>();
+        private static readonly int DOSHeaderSize = FileFormatUtils.SizeOf<DOSHeader>();
+        private static readonly int FileHeaderSize = FileFormatUtils.SizeOf<FileHeader>();
+        private static readonly int OptionalHeader32Size = FileFormatUtils.SizeOf<OptionalHeader32>();
+        private static readonly int OptionalHeader64Size = FileFormatUtils.SizeOf<OptionalHeader64>();
 
         [StructLayout(LayoutKind.Sequential)]
         private struct DOSHeader 
@@ -200,13 +200,13 @@ namespace Workshell.FileFormats.Scanners.Executables
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < DOSHeaderSize + 64 + FileHeaderSize + OptionalHeader64Size)
                 return null;
 
-            var dosHeader = Utils.Read<DOSHeader>(job.StartBytes, 0, DOSHeaderSize);
+            var dosHeader = FileFormatUtils.Read<DOSHeader>(job.StartBytes, 0, DOSHeaderSize);
 
             if (dosHeader.e_magic != DOSMagicNumber)
                 return null;
@@ -228,13 +228,13 @@ namespace Workshell.FileFormats.Scanners.Executables
                 return null;
 
             var fileHeaderOffset = stubOffset + stubSize;
-            var fileHeader = Utils.Read<FileHeader>(job.StartBytes, fileHeaderOffset, FileHeaderSize);
+            var fileHeader = FileFormatUtils.Read<FileHeader>(job.StartBytes, fileHeaderOffset, FileHeaderSize);
 
             if (fileHeader.Signature != PEMagicNumber)
                 return null;
 
             var optHeaderOffset = fileHeaderOffset + FileHeaderSize;
-            var magic = Utils.ReadUInt16(job.StartBytes, optHeaderOffset);
+            var magic = FileFormatUtils.ReadUInt16(job.StartBytes, optHeaderOffset);
             var is32bit = (magic == (ushort)MagicType.PE32);
             var is64bit = (magic == (ushort)MagicType.PE32plus);
 
@@ -248,7 +248,7 @@ namespace Workshell.FileFormats.Scanners.Executables
                 if (optHeaderOffset + OptionalHeader32Size >= job.StartBytes.Length)
                     return null;
 
-                var optHeader = Utils.Read<OptionalHeader32>(job.StartBytes, optHeaderOffset, OptionalHeader32Size);
+                var optHeader = FileFormatUtils.Read<OptionalHeader32>(job.StartBytes, optHeaderOffset, OptionalHeader32Size);
 
                 clrDataDirectory = optHeader.CLRRuntimeHeader;
             }
@@ -257,7 +257,7 @@ namespace Workshell.FileFormats.Scanners.Executables
                 if (optHeaderOffset + OptionalHeader64Size >= job.StartBytes.Length)
                     return null;
 
-                var optHeader = Utils.Read<OptionalHeader64>(job.StartBytes, optHeaderOffset, OptionalHeader64Size);
+                var optHeader = FileFormatUtils.Read<OptionalHeader64>(job.StartBytes, optHeaderOffset, OptionalHeader64Size);
 
                 clrDataDirectory = optHeader.CLRRuntimeHeader;
             }

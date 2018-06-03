@@ -84,7 +84,7 @@ namespace Workshell.FileFormats.Scanners.Media
 
             foreach (var signature in _signatures)
             {
-                if (Utils.MatchBytes(job.StartBytes, 8, signature))
+                if (FileFormatUtils.MatchBytes(job.StartBytes, 8, signature))
                 {
                     var fingerprint = new ThreeGPFormat();
 
@@ -94,7 +94,7 @@ namespace Workshell.FileFormats.Scanners.Media
 
             foreach (var signature in _secondSignatures)
             {
-                if (Utils.MatchBytes(job.StartBytes, 8, signature))
+                if (FileFormatUtils.MatchBytes(job.StartBytes, 8, signature))
                 {
                     var fingerprint = new ThreeGP2Format();
 

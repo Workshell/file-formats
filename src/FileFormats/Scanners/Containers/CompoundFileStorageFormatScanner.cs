@@ -61,11 +61,11 @@ namespace Workshell.FileFormats.Scanners.Containers
 
             var result = false;
 
-            if (!Utils.IsNullOrEmpty(job.StartBytes))
+            if (!FileFormatUtils.IsNullOrEmpty(job.StartBytes))
             {
                 if (job.StartBytes.Length > 8)
                 {
-                    if (Utils.MatchBytes(job.StartBytes, Signature))
+                    if (FileFormatUtils.MatchBytes(job.StartBytes, Signature))
                     {
                         result = true;
                     }

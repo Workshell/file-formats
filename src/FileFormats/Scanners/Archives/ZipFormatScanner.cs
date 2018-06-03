@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Scanners.Archives
     {
         private const uint ZipFileSignature = 67324752; // PK
 
-        private static readonly int ZipFileHeaderSize = Utils.SizeOf<ZipFileHeader>();
+        private static readonly int ZipFileHeaderSize = FileFormatUtils.SizeOf<ZipFileHeader>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct ZipFileHeader
@@ -82,11 +82,11 @@ namespace Workshell.FileFormats.Scanners.Archives
 
             var valid = false;
 
-            if (!Utils.IsNullOrEmpty(job.StartBytes))
+            if (!FileFormatUtils.IsNullOrEmpty(job.StartBytes))
             {
                 if (job.StartBytes.Length > ZipFileHeaderSize)
                 {
-                    var header = Utils.Read<ZipFileHeader>(job.StartBytes, 0, ZipFileHeaderSize);
+                    var header = FileFormatUtils.Read<ZipFileHeader>(job.StartBytes, 0, ZipFileHeaderSize);
 
                     if (header.Signature == ZipFileSignature)
                         valid = true;

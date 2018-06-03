@@ -40,13 +40,13 @@ namespace Workshell.FileFormats.Scanners.Executables
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < 1024)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, 0, Signature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, 0, Signature))
                 return null;
 
             var is32Bit = (job.StartBytes[4] == 0x01);
@@ -86,7 +86,7 @@ namespace Workshell.FileFormats.Scanners.Executables
             if (job.StartBytes[6] != 0x01)
                 return null;
 
-            var version = Utils.ReadUInt32(job.StartBytes, 20, bigEnd);
+            var version = FileFormatUtils.ReadUInt32(job.StartBytes, 20, bigEnd);
 
             if (version != 1)
                 return null;

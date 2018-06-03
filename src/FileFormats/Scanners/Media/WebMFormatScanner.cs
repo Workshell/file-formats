@@ -67,7 +67,7 @@ namespace Workshell.FileFormats.Scanners.Media
 
             for (var i = 0; i < job.StartBytes.Length; i++)
             {
-                if (job.StartBytes[i] == 0x77 && Utils.MatchBytes(job.StartBytes, i, WebM))
+                if (job.StartBytes[i] == 0x77 && FileFormatUtils.MatchBytes(job.StartBytes, i, WebM))
                 {
                     result = true;
                     break;

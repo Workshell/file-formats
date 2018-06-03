@@ -33,7 +33,7 @@ namespace Workshell.FileFormats.Scanners.Containers
     {
         protected const uint Signature = 1179011410;
 
-        protected static readonly int HeaderSize = Utils.SizeOf<RIFFHeader>();
+        protected static readonly int HeaderSize = FileFormatUtils.SizeOf<RIFFHeader>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         protected struct RIFFHeader
@@ -62,11 +62,11 @@ namespace Workshell.FileFormats.Scanners.Containers
 
             var result = false;
 
-            if (!Utils.IsNullOrEmpty(job.StartBytes))
+            if (!FileFormatUtils.IsNullOrEmpty(job.StartBytes))
             {
                 if (job.StartBytes.Length > HeaderSize)
                 {
-                    var header = Utils.Read<RIFFHeader>(job.StartBytes);
+                    var header = FileFormatUtils.Read<RIFFHeader>(job.StartBytes);
 
                     if (header.Signature == Signature)
                     {

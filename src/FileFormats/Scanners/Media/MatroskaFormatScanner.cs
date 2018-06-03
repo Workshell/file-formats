@@ -67,7 +67,7 @@ namespace Workshell.FileFormats.Scanners.Media
 
             for (var i = 0; i < job.StartBytes.Length; i++)
             {
-                if (job.StartBytes[i] == 0x6D && Utils.MatchBytes(job.StartBytes, i, Matroska))
+                if (job.StartBytes[i] == 0x6D && FileFormatUtils.MatchBytes(job.StartBytes, i, Matroska))
                 {
                     result = true;
                     break;

@@ -35,13 +35,13 @@ namespace Workshell.FileFormats.Scanners.EBooks
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < 1024)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, 60, Signature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, 60, Signature))
                 return null;
 
             var fingerprint = new MobiFormat();

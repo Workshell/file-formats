@@ -40,7 +40,7 @@ namespace Workshell.FileFormats.Scanners.ODF
                 return cachedResult;
             }
 
-            var result = Utils.GetFileFromZip(job.Stream, "mimetype");
+            var result = FileFormatUtils.GetFileFromZip(job.Stream, "mimetype");
 
             job.Cache.Set(cacheKey, result);
 

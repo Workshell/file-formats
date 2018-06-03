@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Workshell.FileFormats
 {
-    internal static class Utils
+    public static class FileFormatUtils
     {
         #region Methods
 
@@ -103,49 +103,85 @@ namespace Workshell.FileFormats
             return ReadByte(buffer, 0);
         }
 
-        public static short ReadInt16(byte[] bytes)
+        public static short ReadInt16(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(short))
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
 
-            return BitConverter.ToInt16(bytes,0);
+            var buffer = new byte[sizeof(short)];
+            var idx = 0;
+
+            for (var i = startIndex; i < (startIndex + buffer.Length); i++)
+            {
+                buffer[idx] = bytes[i];
+                idx++;
+            }
+
+            if (bigEndian)
+                buffer = Swap(buffer);
+
+            return BitConverter.ToInt16(buffer, 0);
         }
 
-        public static short ReadInt16(Stream stream)
+        public static short ReadInt16(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(short));
 
-            return ReadInt16(buffer);
+            return ReadInt16(buffer, 0, bigEndian);
         }
 
-        public static int ReadInt32(byte[] bytes)
+        public static int ReadInt32(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(int))
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
 
-            return BitConverter.ToInt32(bytes,0);
+            var buffer = new byte[sizeof(int)];
+            var idx = 0;
+
+            for (var i = startIndex; i < (startIndex + buffer.Length); i++)
+            {
+                buffer[idx] = bytes[i];
+                idx++;
+            }
+
+            if (bigEndian)
+                buffer = Swap(buffer);
+
+            return BitConverter.ToInt32(buffer, 0);
         }
 
-        public static int ReadInt32(Stream stream)
+        public static int ReadInt32(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(int));
 
-            return ReadInt32(buffer);
+            return ReadInt32(buffer, 0, bigEndian);
         }
 
-        public static long ReadInt64(byte[] bytes)
+        public static long ReadInt64(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(long))
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
 
-            return BitConverter.ToInt64(bytes,0);
+            var buffer = new byte[sizeof(long)];
+            var idx = 0;
+
+            for (var i = startIndex; i < (startIndex + buffer.Length); i++)
+            {
+                buffer[idx] = bytes[i];
+                idx++;
+            }
+
+            if (bigEndian)
+                buffer = Swap(buffer);
+
+            return BitConverter.ToInt64(buffer, 0);
         }
 
-        public static long ReadInt64(Stream stream)
+        public static long ReadInt64(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(long));
 
-            return ReadInt64(buffer);
+            return ReadInt64(buffer, 0, bigEndian);
         }
 
         public static ushort ReadUInt16(byte[] bytes, int startIndex = 0, bool bigEndian = false)
@@ -202,91 +238,31 @@ namespace Workshell.FileFormats
             return ReadUInt32(buffer, 0, bigEndian);
         }
 
-        public static ulong ReadUInt64(byte[] bytes)
+        public static ulong ReadUInt64(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(ulong))
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
 
-            return BitConverter.ToUInt64(bytes,0);
+            var buffer = new byte[sizeof(ulong)];
+            var idx = 0;
+
+            for (var i = startIndex; i < (startIndex + buffer.Length); i++)
+            {
+                buffer[idx] = bytes[i];
+                idx++;
+            }
+
+            if (bigEndian)
+                buffer = Swap(buffer);
+
+            return BitConverter.ToUInt64(buffer,0);
         }
 
-        public static ulong ReadUInt64(Stream stream)
+        public static ulong ReadUInt64(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(ulong));
 
-            return ReadUInt64(buffer);
-        }
-
-        public static string ReadString(Stream stream)
-        {
-            var builder = new StringBuilder(256);
-
-            while (true)
-            {
-                var b = stream.ReadByte();
-
-                if (b <= 0)
-                    break;
-
-                builder.Append((char)b);
-            }
-
-            return builder.ToString();
-        }
-
-        public static string ReadString(Stream stream, long size)
-        {
-            var buffer = new byte[size];
-            var numRead = stream.Read(buffer,0,buffer.Length);
-
-            if (numRead < size)
-                throw new IOException("Could not read all of the buffer from the stream.");
-
-            var builder = new StringBuilder(256);
-
-            foreach(var b in buffer)
-            {
-                if (b == 0)
-                    break;
-
-                builder.Append((char)b);
-            }
-
-            return builder.ToString();
-        }
-
-        public static string ReadUnicodeString(Stream stream)
-        {
-            var builder = new StringBuilder();
-
-            while (true)
-            {
-                var value = ReadUInt16(stream);
-
-                if (value == 0)
-                    break;
-
-                builder.Append((char)value);
-            }
-
-            return builder.ToString();
-        }
-
-        public static string ReadUnicodeString(Stream stream, int charCount)
-        {
-            var builder = new StringBuilder();
-
-            for(var i = 0; i < charCount; i++)
-            {
-                var value = Utils.ReadUInt16(stream);
-
-                if (value == 0)
-                    break;
-
-                builder.Append((char)value);
-            }
-
-            return builder.ToString();
+            return ReadUInt64(buffer, 0, bigEndian);
         }
 
         public static byte[] ReadBytes(byte[] bytes, int size)
@@ -315,64 +291,6 @@ namespace Workshell.FileFormats
             var result = new byte[numRead];
 
             Array.Copy(buffer, 0, result, 0, numRead);
-
-            return result;
-        }
-
-        public static bool IsNumeric(object value)
-        {
-            switch (Type.GetTypeCode(value.GetType()))
-            {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.Int16:
-                case TypeCode.UInt32:
-                case TypeCode.Int32:
-                case TypeCode.UInt64:
-                case TypeCode.Int64:
-                case TypeCode.Single:
-                case TypeCode.Double:
-                case TypeCode.Decimal:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        public static string IntToHex(object value)
-        {
-            var result = string.Empty;
-
-            switch (Type.GetTypeCode(value.GetType()))
-            {
-                case TypeCode.Byte:
-                    result = "0x" + ((byte)(value)).ToString("X2");
-                    break;
-                case TypeCode.SByte:
-                    result = "0x" + ((sbyte)(value)).ToString("X2");
-                    break;
-                case TypeCode.UInt16:
-                    result = "0x" + ((ushort)(value)).ToString("X4");
-                    break;
-                case TypeCode.Int16:
-                    result = "0x" + ((short)(value)).ToString("X4");
-                    break;
-                case TypeCode.UInt32:
-                    result = "0x" + ((uint)(value)).ToString("X8");
-                    break;
-                case TypeCode.Int32:
-                    result = "0x" + ((int)(value)).ToString("X8");
-                    break;
-                case TypeCode.UInt64:
-                    result = "0x" + ((ulong)(value)).ToString("X16");
-                    break;
-                case TypeCode.Int64:
-                    result = "0x" + ((long)(value)).ToString("X16");
-                    break;
-                default:
-                    throw new FormatException("Unknown integer value type.");
-            }
 
             return result;
         }
@@ -412,18 +330,6 @@ namespace Workshell.FileFormats
             ulong result = (((ulong)ms) << 32) | ls;
 
             return result;
-        }
-
-        public static string BytesToString(byte[] bytes, bool upperCase = false)
-        {
-            var builder = new StringBuilder();
-
-            foreach (var b in bytes)
-            {
-                builder.Append(b.ToString(upperCase ? "X2" : "x2"));
-            }
-
-            return builder.ToString();
         }
 
         public static byte[] Swap(byte[] bytes)

@@ -35,7 +35,7 @@ namespace Workshell.FileFormats.Scanners.Containers
             if (!ValidateStartBytes(job))
                 return null;
 
-            var contentTypes = Utils.GetFileFromZip(job.Stream, "MANIFEST.MF");
+            var contentTypes = FileFormatUtils.GetFileFromZip(job.Stream, "MANIFEST.MF");
 
             if (string.IsNullOrWhiteSpace(contentTypes))
                 return null;

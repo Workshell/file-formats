@@ -34,13 +34,13 @@ namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < 20)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, 4, Signature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, 4, Signature))
                 return null;
 
             var fingerprint = new LegacyAccessDatabaseFormat();

@@ -30,7 +30,7 @@ namespace Workshell.FileFormats.Scanners.Archives
     public class CabinetFormatScanner : FileFormatScanner
     {
         private static readonly byte?[] Signature = new byte?[] { 0x4D, 0x53, 0x43, 0x46 };
-        private static readonly int HeaderSize = Utils.SizeOf<Header>();
+        private static readonly int HeaderSize = FileFormatUtils.SizeOf<Header>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct Header
@@ -59,15 +59,15 @@ namespace Workshell.FileFormats.Scanners.Archives
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < HeaderSize)
                 return null;
 
-            var header = Utils.Read<Header>(job.StartBytes, 0, HeaderSize);
+            var header = FileFormatUtils.Read<Header>(job.StartBytes, 0, HeaderSize);
 
-            if (!Utils.MatchBytes(header.Signature, Signature))
+            if (!FileFormatUtils.MatchBytes(header.Signature, Signature))
                 return null;
 
             if (!(header.VersionMajor == 1 && header.VersionMinor == 3))

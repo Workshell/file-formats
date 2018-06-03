@@ -38,13 +38,13 @@ namespace Workshell.FileFormats.Scanners.Archives
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= Signature.Length)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, Signature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, Signature))
                 return null;
 
             var fingerprint = new SevenZipFormat();

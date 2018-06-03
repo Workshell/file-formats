@@ -60,9 +60,9 @@ namespace Workshell.FileFormats.Scanners.Containers
 
             var result = false;
 
-            if (!Utils.IsNullOrEmpty(job.StartBytes))
+            if (!FileFormatUtils.IsNullOrEmpty(job.StartBytes))
             {
-                if (Utils.MatchBytes(job.StartBytes, 0, Signature))
+                if (FileFormatUtils.MatchBytes(job.StartBytes, 0, Signature))
                 {
                     result = true;
                 }

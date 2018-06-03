@@ -34,8 +34,8 @@ namespace Workshell.FileFormats.Scanners.Images
         private const uint IENDType = 1145980233;
 
         private static readonly byte?[] Signature = new byte?[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-        private static readonly int ChunkSize = Utils.SizeOf<Chunk>();
-        private static readonly int HeaderChunkSize = Utils.SizeOf<IHDRChunk>();
+        private static readonly int ChunkSize = FileFormatUtils.SizeOf<Chunk>();
+        private static readonly int HeaderChunkSize = FileFormatUtils.SizeOf<IHDRChunk>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct Chunk
@@ -66,13 +66,13 @@ namespace Workshell.FileFormats.Scanners.Images
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (!ValidateStart(job.StartBytes))
                 return null;
 
-            if (Utils.IsNullOrEmpty(job.EndBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.EndBytes))
                 return null;
 
             if (!ValidateEnd(job.EndBytes))
@@ -88,14 +88,14 @@ namespace Workshell.FileFormats.Scanners.Images
             if ((Signature.Length + ChunkSize + HeaderChunkSize) > startBytes.Length)
                 return false;
 
-            if (!Utils.MatchBytes(startBytes, Signature))
+            if (!FileFormatUtils.MatchBytes(startBytes, Signature))
                 return false;
 
             using (var mem = new MemoryStream(startBytes))
             {
                 mem.Seek(Signature.Length, SeekOrigin.Begin);
 
-                var chunk = Utils.Read<Chunk>(mem);
+                var chunk = FileFormatUtils.Read<Chunk>(mem);
 
                 if (chunk.Type != IHDRType)
                     return false;
@@ -109,7 +109,7 @@ namespace Workshell.FileFormats.Scanners.Images
             if (bytes.Length < ChunkSize)
                 return false;
 
-            var chunk = Utils.Read<Chunk>(bytes, bytes.Length - 12, ChunkSize);
+            var chunk = FileFormatUtils.Read<Chunk>(bytes, bytes.Length - 12, ChunkSize);
 
             if (chunk.Length != 0 && chunk.Type != IENDType)
                 return false;

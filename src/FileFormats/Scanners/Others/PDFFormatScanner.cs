@@ -48,13 +48,13 @@ namespace Workshell.FileFormats.Scanners
 
         private bool ValidateStartBytes(byte[] bytes)
         {
-            if (Utils.IsNullOrEmpty(bytes))
+            if (FileFormatUtils.IsNullOrEmpty(bytes))
                 return false;
 
             if (bytes.Length < 20)
                 return false;
 
-            if (!Utils.MatchBytes(bytes, StartSignature))
+            if (!FileFormatUtils.MatchBytes(bytes, StartSignature))
                 return false;
 
             return true;
@@ -62,13 +62,13 @@ namespace Workshell.FileFormats.Scanners
 
         private bool ValidateEndBytes(byte[] bytes)
         {
-            if (Utils.IsNullOrEmpty(bytes))
+            if (FileFormatUtils.IsNullOrEmpty(bytes))
                 return false;
 
             if (bytes.Length < EndSignature.Length)
                 return false;
 
-            if (!Utils.MatchBytes(bytes, bytes.Length - EndSignature.Length, EndSignature))
+            if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature.Length, EndSignature))
                 return false;
 
             return true;

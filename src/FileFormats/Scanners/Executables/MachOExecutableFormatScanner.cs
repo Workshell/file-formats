@@ -35,7 +35,7 @@ namespace Workshell.FileFormats.Scanners.Executables
         private uint MAGIC_64 = 0xfeedfacf; // 64-bit, big-endian
         private uint CIGAM_64 = 0xcffaedfe; // 64-bit, little-endian
 
-        private static readonly int HeaderSize = Utils.SizeOf<Header>();
+        private static readonly int HeaderSize = FileFormatUtils.SizeOf<Header>();
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Header 
@@ -57,13 +57,13 @@ namespace Workshell.FileFormats.Scanners.Executables
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < 1024)
                 return null;
 
-            var header = Utils.Read<Header>(job.StartBytes, 0, HeaderSize);
+            var header = FileFormatUtils.Read<Header>(job.StartBytes, 0, HeaderSize);
 
             var is32Bit = (header.magic == 0xfeedface || header.magic == 0xcefaedfe);
             var is64Bit = (header.magic == 0xfeedfacf || header.magic == 0xcffaedfe);

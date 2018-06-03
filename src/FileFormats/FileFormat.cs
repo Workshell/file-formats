@@ -73,7 +73,7 @@ namespace Workshell.FileFormats
             // Get first 4K
             stream.Seek(0, SeekOrigin.Begin);
 
-            var firstBytes = Utils.ReadBytes(stream, FourKilobytes);
+            var firstBytes = FileFormatUtils.ReadBytes(stream, FourKilobytes);
 
             // Get last 4K
             var lastBytes = firstBytes;
@@ -84,7 +84,7 @@ namespace Workshell.FileFormats
 
                 stream.Seek(offset, SeekOrigin.Begin);
 
-                lastBytes = Utils.ReadBytes(stream, FourKilobytes);
+                lastBytes = FileFormatUtils.ReadBytes(stream, FourKilobytes);
             }
 
             // Perform scan

@@ -94,7 +94,50 @@ When scanning we want the OOXML format to _rank_ higher than the ZIP format, so 
 
 Once you have your `FileFormat` class you then need to subclass `FileFormatScanner` which is used to perform the actual data scanning.
 
+The `FileFormatScanner` class looks like this:
 
+```
+public abstract class FileFormatScanner
+{
+    public abstract FileFormat Match(FileFormatScanJob job);
+}
+```
+
+It only has one method you need to override, `FileFormatScanner.Match(FileFormatScanJob)`.
+
+The `FileFormatScanJob` instance supplied to the method contains the first and last 4KB of the data being scanned and a stream.
+You use these to perform the analysis required to determine the format of the data.
+
+The 7-Zip scanner for example looks like this:
+
+```
+public class SevenZipFormatScanner : FileFormatScanner
+{
+    private static readonly byte?[] Signature = new byte?[] { 0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C };
+
+    public SevenZipFormatScanner()
+    {
+    }
+
+    public override FileFormat Match(FileFormatScanJob job)
+    {
+        if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            return null;
+
+        if (job.StartBytes.Length <= Signature.Length)
+            return null;
+
+        if (!FileFormatUtils.MatchBytes(job.StartBytes, Signature))
+            return null;
+
+        var fingerprint = new SevenZipFormat();
+
+        return fingerprint;
+    }
+}
+```
+
+Take a look at the existing formats for reference implementations.
 
 
 ## Recognised File Formats

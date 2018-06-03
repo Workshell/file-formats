@@ -36,7 +36,7 @@ namespace Workshell.FileFormats.Scanners.EBooks
             if (!ValidateStartBytes(job))
                 return null;
 
-            var mimeType = Utils.GetFileFromZip(job.Stream, "mimetype");
+            var mimeType = FileFormatUtils.GetFileFromZip(job.Stream, "mimetype");
 
             if (string.IsNullOrWhiteSpace(mimeType))
                 return null;

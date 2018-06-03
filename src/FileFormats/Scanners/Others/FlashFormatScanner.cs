@@ -36,7 +36,7 @@ namespace Workshell.FileFormats.Scanners
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length < 1024)
@@ -44,15 +44,15 @@ namespace Workshell.FileFormats.Scanners
 
             FlashCompressionType? compressionType = null;
 
-            if (Utils.MatchBytes(job.StartBytes, FwsSignature))
+            if (FileFormatUtils.MatchBytes(job.StartBytes, FwsSignature))
             {
                 compressionType = FlashCompressionType.Uncompressed;
             }
-            else if (Utils.MatchBytes(job.StartBytes, CwsSignature))
+            else if (FileFormatUtils.MatchBytes(job.StartBytes, CwsSignature))
             {
                 compressionType = FlashCompressionType.CompressedZlib;
             }
-            else if (Utils.MatchBytes(job.StartBytes, ZwsSignature))
+            else if (FileFormatUtils.MatchBytes(job.StartBytes, ZwsSignature))
             {
                 compressionType = FlashCompressionType.CompressedLZMA;
             }

@@ -36,7 +36,7 @@ namespace Workshell.FileFormats.Scanners.Containers
             if (!ValidateStartBytes(job))
                 return null;
 
-            var contentTypes = Utils.GetFileFromZip(job.Stream, "[Content_Types].xml");
+            var contentTypes = FileFormatUtils.GetFileFromZip(job.Stream, "[Content_Types].xml");
 
             if (string.IsNullOrWhiteSpace(contentTypes))
                 return null;

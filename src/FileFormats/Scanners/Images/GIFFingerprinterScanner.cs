@@ -31,7 +31,7 @@ namespace Workshell.FileFormats.Scanners.Images
     {
         private static readonly byte?[] EightySevenSignature = new byte?[] { 0x47, 0x49, 0x46, 0x38, 0x37, 0x61 };
         private static readonly byte?[] EightyNineSignature = new byte?[] { 0x47, 0x49, 0x46, 0x38, 0x39, 0x61 };
-        private static readonly int HeaderSize = Utils.SizeOf<GIFHeader>();
+        private static readonly int HeaderSize = FileFormatUtils.SizeOf<GIFHeader>();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct GIFHeader
@@ -54,13 +54,13 @@ namespace Workshell.FileFormats.Scanners.Images
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= HeaderSize)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, EightySevenSignature) && !Utils.MatchBytes(job.StartBytes, EightyNineSignature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, EightySevenSignature) && !FileFormatUtils.MatchBytes(job.StartBytes, EightyNineSignature))
                 return null;
 
             var fingerprint = new GIFImageFormat();

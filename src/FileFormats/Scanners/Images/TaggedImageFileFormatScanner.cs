@@ -38,13 +38,13 @@ namespace Workshell.FileFormats.Scanners.Images
 
         public override FileFormat Match(FileFormatScanJob job)
         {
-            if (Utils.IsNullOrEmpty(job.StartBytes))
+            if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
                 return null;
 
             if (job.StartBytes.Length <= TIFFSignature.Length)
                 return null;
 
-            if (!Utils.MatchBytes(job.StartBytes, TIFFSignature))
+            if (!FileFormatUtils.MatchBytes(job.StartBytes, TIFFSignature))
                 return null;
 
             var fingerprint = new TIFFImageFormat();
