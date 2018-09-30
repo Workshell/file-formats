@@ -35,7 +35,11 @@ namespace Workshell.FileFormats
 
         public static int SizeOf<T>() where T : struct
         {
+            #if NET45
+            var result = Marshal.SizeOf(typeof(T));
+            #else
             var result = Marshal.SizeOf<T>();
+            #endif
 
             return result;
         }
@@ -53,7 +57,11 @@ namespace Workshell.FileFormats
             {
                 Marshal.Copy(bytes, offset, ptr, length);
 
+                #if NET45
+                T result = (T)Marshal.PtrToStructure(ptr, typeof(T));
+                #else
                 T result = Marshal.PtrToStructure<T>(ptr);
+                #endif
 
                 return result;
             }

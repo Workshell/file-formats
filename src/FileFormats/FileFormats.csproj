@@ -1,25 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <AssemblyName>Workshell.FileFormats</AssemblyName>
     <RootNamespace>Workshell.FileFormats</RootNamespace>
-    <Authors>Workshell Ltd</Authors>
-    <Company>Workshell Ltd</Company>
-    <Product>Workshell File Formats</Product>
-    <Description>An extensible class library for discovering the format of files and data.</Description>
-    <Copyright>©2018 Workshell Ltd</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Workshell/file-formats/master/license.txt</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/Workshell/file-formats</PackageProjectUrl>
-    <PackageIconUrl>http://img.workshell.co.uk/logo_128.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/Workshell/file-formats</RepositoryUrl>
-    <PackageTags>workshell file format fingerprint signature</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Workshell.snk</AssemblyOriginatorKeyFile>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,10 +41,15 @@
     <Compile Include="Scanners\Archives\ZipFormatScanner.cs" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
