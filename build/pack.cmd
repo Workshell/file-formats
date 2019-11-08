@@ -1,1 +1,0 @@
-dotnet pack ..\src\FileFormats\FileFormats.csproj -c Release --include-symbols

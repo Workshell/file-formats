@@ -1,15 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "src\Demo\Demo.csproj", "{8B6E7A45-A224-46F6-AD2A-CD036B52571F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E7082C4A-6E95-4BB8-95D6-F2B38576EA8B}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		license.txt = license.txt
 		readme.md = readme.md
+		version.txt = version.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileFormats", "src\FileFormats\FileFormats.csproj", "{F703480F-99BD-4727-9F50-AB20E2A4E457}"

@@ -1,1 +1,0 @@
-nuget sign ..\src\FileFormats\bin\Release\netstandard1.6\*.nupkg -CertificatePath ..\..\Workshell_CodeSign.pfx -Timestamper http://timestamp.comodoca.com
