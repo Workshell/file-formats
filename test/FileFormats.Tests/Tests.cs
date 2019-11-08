@@ -23,32 +23,42 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 
 using NUnit.Framework;
 
-namespace FileFormats.Tests
+namespace Workshell.FileFormats.Tests
 {
     [TestFixture]
     public sealed partial class FileFormatTests
     {
-        private string _samplesDirectory;
+        private ZipArchive _zipArchive;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            var assembly = typeof(FileFormatTests).Assembly;
-            var directory = Path.GetDirectoryName(assembly.Location);
-
-            _samplesDirectory = Path.GetFullPath(Path.Combine(directory, "..\\..\\..\\..\\..\\samples"));
+            _zipArchive = new ZipArchive(TestingUtils.GetFileFromResources("samples.zip"), ZipArchiveMode.Read);
         }
 
-        [Test]
-        public void Check_Samples_Directory_Exists()
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
         {
-            var exists = Directory.Exists(_samplesDirectory);
+            _zipArchive.Dispose();
+        }
 
-            Assert.True(exists);
+        protected Stream GetFileFromZip(string fileName)
+        {
+            var entry = _zipArchive.GetEntry(fileName);
+            var mem = new MemoryStream();
+
+            using (var stream = entry.Open())
+            {
+                stream.CopyTo(mem, 4096);
+                mem.Seek(0, SeekOrigin.Begin);
+            }
+
+            return mem;
         }
     }
 }
