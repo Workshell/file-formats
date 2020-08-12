@@ -29,7 +29,9 @@ namespace Workshell.FileFormats.Scanners
     public class PDFFormatScanner : FileFormatScanner
     {
         private static readonly byte?[] StartSignature = new byte?[] { 0x25, 0x50, 0x44, 0x46, 0x2D };
-        private static readonly byte?[] EndSignature = new byte?[] { 0x45, 0x4F, 0x46, 0x0A };
+        private static readonly byte?[] EndSignature1 = new byte?[] { 0x25, 0x45, 0x4F, 0x46 };
+        private static readonly byte?[] EndSignature2 = new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0A };
+        private static readonly byte?[] EndSignature3 = new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A };
 
         #region Methods
 
@@ -65,10 +67,12 @@ namespace Workshell.FileFormats.Scanners
             if (FileFormatUtils.IsNullOrEmpty(bytes))
                 return false;
 
-            if (bytes.Length < EndSignature.Length)
+            if (bytes.Length < EndSignature3.Length)
                 return false;
 
-            if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature.Length, EndSignature))
+            if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature1.Length, EndSignature1) &&
+                !FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature2.Length, EndSignature2) &&
+                !FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature3.Length, EndSignature3))
                 return false;
 
             return true;
