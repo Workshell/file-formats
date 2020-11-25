@@ -73,7 +73,7 @@ namespace Workshell.FileFormats.Scanners.Images
 
             var exif = FileFormatUtils.MatchBytes(header.App, EXIF);
 
-            if (!FileFormatUtils.MatchBytes(header.App, JFIF) && exif)
+            if (!exif && !FileFormatUtils.MatchBytes(header.App, JFIF))
                 return null;
 
             var fingerprint = new JPEGImageFormat(exif);
