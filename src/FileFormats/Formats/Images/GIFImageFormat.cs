@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Images
 {
     public class GIFImageFormat : ImageFormat
     {
-        private static string[] _contentTypes => new[] { "image/gif" };
-        private static string[] _extensions => new[] { "gif" };
+        private static readonly string[] _contentTypes = { "image/gif" };
+        private static readonly string[] _extensions = { "gif" };
 
-        public GIFImageFormat() : base(_contentTypes, _extensions)
+        public GIFImageFormat() : base(_contentTypes, _extensions, "Graphics Interchange Format")
         {
         }
 

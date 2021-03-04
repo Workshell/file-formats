@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class AMRFormat : FileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "audio/amr", "audio/3gpp", "audio/3gpp2" };
-        private static readonly string[] _extensions = new string[] { "amr", "3ga" };
+        private static readonly string[] _contentTypes = { "audio/amr", "audio/3gpp", "audio/3gpp2" };
+        private static readonly string[] _extensions = { "amr", "3ga" };
 
-        public AMRFormat() : base(_contentTypes, _extensions)
+        public AMRFormat() : base(_contentTypes, _extensions, "Adaptive Multi-Rate Audio")
         {
 
         }

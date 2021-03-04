@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Images
 {
     public class PNGImageFormat : ImageFormat
     {
-        private static string[] _contentTypes => new[] { "image/png" };
-        private static string[] _extensions => new[] { "png" };
+        private static readonly string[] _contentTypes = { "image/png" };
+        private static readonly string[] _extensions = { "png" };
 
-        public PNGImageFormat() : base(_contentTypes, _extensions)
+        public PNGImageFormat() : base(_contentTypes, _extensions, "Portable Network Graphic")
         {
         }
 

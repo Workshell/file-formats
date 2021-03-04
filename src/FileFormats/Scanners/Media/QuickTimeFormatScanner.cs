@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Media;
 
 namespace Workshell.FileFormats.Scanners.Media
@@ -43,7 +44,9 @@ namespace Workshell.FileFormats.Scanners.Media
                 var bytes = Encoding.ASCII.GetBytes(_signatureString).Cast<byte?>().ToList();
 
                 while (bytes.Count != 4)
+                {
                     bytes.Add(null);
+                }
 
                 signatures.Add(bytes.ToArray());
             }
@@ -60,7 +63,9 @@ namespace Workshell.FileFormats.Scanners.Media
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             foreach (var signature in _signatures)
             {

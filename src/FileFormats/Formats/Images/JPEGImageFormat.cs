@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Images
 {
     public class JPEGImageFormat : ImageFormat
     {
-        private static string[] _contentTypes => new[] { "image/jpeg" };
-        private static string[] _extensions => new[] { "jpg", "jpeg", "jpe", "jif", "jfif", "jfi" };
+        private static readonly string[] _contentTypes = { "image/jpeg" };
+        private static readonly string[] _extensions = { "jpg", "jpeg", "jpe", "jif", "jfif", "jfi" };
 
-        public JPEGImageFormat(bool exif = false) : base(_contentTypes, _extensions)
+        public JPEGImageFormat(bool exif = false) : base(_contentTypes, _extensions, "JPEG")
         {
             Exif = exif;
         }

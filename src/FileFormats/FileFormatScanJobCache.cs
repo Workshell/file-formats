@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,9 @@ namespace Workshell.FileFormats
             if (_cache.ContainsKey(key))
             {
                 if (!replace)
+                {
                     return false;
+                }
             }
 
             _cache.Add(key, value);
@@ -72,7 +74,9 @@ namespace Workshell.FileFormats
         public object Get(string key)
         {
             if (!_cache.ContainsKey(key))
+            {
                 return null;
+            }
 
             return _cache[key];
         }
@@ -80,7 +84,9 @@ namespace Workshell.FileFormats
         public T Get<T>(string key)
         {
             if (!_cache.ContainsKey(key))
+            {
                 return default(T);
+            }
 
             return (T)_cache[key];
         }

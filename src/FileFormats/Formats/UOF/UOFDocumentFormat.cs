@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.UOF
 {
     public class UOFDocumentFormat : XmlFormat
     {
-        private static string[] _contentTypes => new[] { "text/xml", "application/vnd.uof.text" };
-        private static string[] _extensions => new[] { "uot", "uof" };
+        private static readonly string[] _contentTypes = { "text/xml", "application/vnd.uof.text" };
+        private static readonly string[] _extensions = { "uot", "uof" };
 
-        public UOFDocumentFormat() : base(_contentTypes, _extensions)
+        public UOFDocumentFormat() : base(_contentTypes, _extensions, "Unified Office Format Document")
         {
         }
 

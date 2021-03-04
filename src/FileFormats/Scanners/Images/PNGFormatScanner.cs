@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Images;
 
 namespace Workshell.FileFormats.Scanners.Images
@@ -67,16 +68,24 @@ namespace Workshell.FileFormats.Scanners.Images
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (!ValidateStart(job.StartBytes))
+            {
                 return null;
+            }
 
             if (FileFormatUtils.IsNullOrEmpty(job.EndBytes))
+            {
                 return null;
+            }
 
             if (!ValidateEnd(job.EndBytes))
+            {
                 return null;
+            }
 
             var fingerprint = new PNGImageFormat();
 
@@ -86,10 +95,14 @@ namespace Workshell.FileFormats.Scanners.Images
         private bool ValidateStart(byte[] startBytes)
         {
             if ((Signature.Length + ChunkSize + HeaderChunkSize) > startBytes.Length)
+            {
                 return false;
+            }
 
             if (!FileFormatUtils.MatchBytes(startBytes, Signature))
+            {
                 return false;
+            }
 
             using (var mem = new MemoryStream(startBytes))
             {
@@ -98,7 +111,9 @@ namespace Workshell.FileFormats.Scanners.Images
                 var chunk = FileFormatUtils.Read<Chunk>(mem);
 
                 if (chunk.Type != IHDRType)
+                {
                     return false;
+                }
             }
 
             return true;
@@ -107,12 +122,16 @@ namespace Workshell.FileFormats.Scanners.Images
         private bool ValidateEnd(byte[] bytes)
         {
             if (bytes.Length < ChunkSize)
+            {
                 return false;
+            }
 
             var chunk = FileFormatUtils.Read<Chunk>(bytes, bytes.Length - 12, ChunkSize);
 
             if (chunk.Length != 0 && chunk.Type != IENDType)
+            {
                 return false;
+            }
 
             return true;
         }

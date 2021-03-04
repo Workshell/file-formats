@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 using Workshell.FileFormats.Formats.Executables;
 
 namespace Workshell.FileFormats.Scanners.Executables
@@ -58,18 +59,23 @@ namespace Workshell.FileFormats.Scanners.Executables
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < 1024)
+            {
                 return null;
+            }
 
             var header = FileFormatUtils.Read<Header>(job.StartBytes, 0, HeaderSize);
-
             var is32Bit = (header.magic == 0xfeedface || header.magic == 0xcefaedfe);
             var is64Bit = (header.magic == 0xfeedfacf || header.magic == 0xcffaedfe);
 
             if (!is32Bit && !is64Bit)
+            {
                 return null;
+            }
 
             MachOImageFormat format;
 
@@ -83,16 +89,22 @@ namespace Workshell.FileFormats.Scanners.Executables
             }
 
             if (is32Bit)
+            {
                 format = MachOImageFormat._32Bit;
+            }
 
             if (is64Bit)
+            {
                 format = MachOImageFormat._64Bit;
+            }
 
             var littleEnd = (header.magic == 0xcefaedfe || header.magic == 0xcffaedfe);
             var bigEnd = (header.magic == 0xfeedface || header.magic == 0xfeedfacf);
 
             if (!littleEnd && !bigEnd)
+            {
                 return null;
+            }
 
             MachOImageEndianness endianness;
 

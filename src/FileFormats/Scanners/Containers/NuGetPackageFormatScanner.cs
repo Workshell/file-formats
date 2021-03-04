@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.IO.Compression;
+
 using Workshell.FileFormats.Formats.Containers;
 using Workshell.FileFormats.Scanners.Archives;
 
@@ -34,15 +35,21 @@ namespace Workshell.FileFormats.Scanners.Containers
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             var contentTypes = FileFormatUtils.GetFileFromZip(job.Stream, "[Content_Types].xml");
 
             if (string.IsNullOrWhiteSpace(contentTypes))
+            {
                 return null;
+            }
 
-            if (contentTypes.IndexOf("<Default Extension=\"nuspec\" ContentType=\"application/octet\" />",StringComparison.Ordinal) == -1)
+            if (contentTypes.IndexOf("<Default Extension=\"nuspec\" ContentType=\"application/octet\" />", StringComparison.Ordinal) == -1)
+            {
                 return null;
+            }
 
             var hasNuspec = false;
 
@@ -59,7 +66,9 @@ namespace Workshell.FileFormats.Scanners.Containers
             }
 
             if (!hasNuspec)
+            {
                 return null;
+            }
 
             var fingerprint = new NuGetPackageFormat();
 

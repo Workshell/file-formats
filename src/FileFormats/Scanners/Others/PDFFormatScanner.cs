@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats;
 
 namespace Workshell.FileFormats.Scanners
@@ -36,10 +37,14 @@ namespace Workshell.FileFormats.Scanners
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job.StartBytes))
+            {
                 return null;
+            }
 
             if (!ValidateEndBytes(job.EndBytes))
+            {
                 return null;
+            }
 
             var fingerprint = new PDFFormat();
 
@@ -49,13 +54,19 @@ namespace Workshell.FileFormats.Scanners
         private bool ValidateStartBytes(byte[] bytes)
         {
             if (FileFormatUtils.IsNullOrEmpty(bytes))
+            {
                 return false;
+            }
 
             if (bytes.Length < 20)
+            {
                 return false;
+            }
 
             if (!FileFormatUtils.MatchBytes(bytes, StartSignature))
+            {
                 return false;
+            }
 
             return true;
         }
@@ -63,13 +74,19 @@ namespace Workshell.FileFormats.Scanners
         private bool ValidateEndBytes(byte[] bytes)
         {
             if (FileFormatUtils.IsNullOrEmpty(bytes))
+            {
                 return false;
+            }
 
             if (bytes.Length < EndSignature.Length)
+            {
                 return false;
+            }
 
             if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature.Length, EndSignature))
+            {
                 return false;
+            }
 
             return true;
         }

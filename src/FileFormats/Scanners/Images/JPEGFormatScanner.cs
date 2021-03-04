@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Images;
 
 namespace Workshell.FileFormats.Scanners.Images
@@ -61,20 +62,28 @@ namespace Workshell.FileFormats.Scanners.Images
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length <= HeaderSize)
+            {
                 return null;
+            }
 
             var header = FileFormatUtils.Read<JFIFHeader>(job.StartBytes, 0, HeaderSize);
 
             if (!FileFormatUtils.MatchBytes(header.SOI, Signature))
+            {
                 return null;
+            }
 
             var exif = FileFormatUtils.MatchBytes(header.App, EXIF);
 
             if (!FileFormatUtils.MatchBytes(header.App, JFIF) && exif)
+            {
                 return null;
+            }
 
             var fingerprint = new JPEGImageFormat(exif);
 

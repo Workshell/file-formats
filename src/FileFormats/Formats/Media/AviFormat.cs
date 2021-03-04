@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class AVIFormat : RIFFFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "video/avi", "video/vnd.avi", "video/msvideo", "video/x-msvideo" };
-        private static readonly string[] _extensions = new string[] { "avi" };
+        private static readonly string[] _contentTypes = { "video/avi", "video/vnd.avi", "video/msvideo", "video/x-msvideo" };
+        private static readonly string[] _extensions = { "avi" };
 
-        public AVIFormat() : base(_contentTypes, _extensions)
+        public AVIFormat() : base(_contentTypes, _extensions, "Audio Video Interleaved")
         {
 
         }

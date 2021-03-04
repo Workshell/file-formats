@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.ODF
 {
     public class ODFDatabaseFormat : ODFZipFormat
     {
-        private static string[] _contentTypes => new[] { "application/vnd.oasis.opendocument.base", "application/vnd.oasis.opendocument.database", "application/vnd.sun.xml.base" };
-        private static string[] _extensions => new[] { "odb" };
+        private static readonly string[] _contentTypes = { "application/vnd.oasis.opendocument.base", "application/vnd.oasis.opendocument.database", "application/vnd.sun.xml.base" };
+        private static readonly string[] _extensions = { "odb" };
 
-        public ODFDatabaseFormat() : base(_contentTypes, _extensions)
+        public ODFDatabaseFormat() : base(_contentTypes, _extensions, "OpenOffice Database")
         {
         }
     }

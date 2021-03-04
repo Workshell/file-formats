@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class OggFormat : FileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "video/ogg", "audio/ogg", "application/ogg" };
-        private static readonly string[] _extensions = new string[] { "ogg", "ogv", "oga", "ogx", "ogm", "spx", "opus" };
+        private static readonly string[] _contentTypes = { "video/ogg", "audio/ogg", "application/ogg" };
+        private static readonly string[] _extensions = { "ogg", "ogv", "oga", "ogx", "ogm", "spx", "opus" };
 
-        public OggFormat() : base(_contentTypes, _extensions)
+        public OggFormat() : base(_contentTypes, _extensions, "Ogg")
         {
 
         }

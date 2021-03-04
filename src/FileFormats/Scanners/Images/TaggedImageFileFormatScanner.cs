@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats.Images;
 
 namespace Workshell.FileFormats.Scanners.Images
@@ -39,13 +40,19 @@ namespace Workshell.FileFormats.Scanners.Images
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length <= TIFFSignature.Length)
+            {
                 return null;
+            }
 
             if (!FileFormatUtils.MatchBytes(job.StartBytes, TIFFSignature))
+            {
                 return null;
+            }
 
             var fingerprint = new TIFFImageFormat();
 

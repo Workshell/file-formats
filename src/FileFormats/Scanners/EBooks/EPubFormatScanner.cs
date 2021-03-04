@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats.EBooks;
 using Workshell.FileFormats.Scanners.Archives;
 
@@ -34,15 +35,21 @@ namespace Workshell.FileFormats.Scanners.EBooks
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             var mimeType = FileFormatUtils.GetFileFromZip(job.Stream, "mimetype");
 
             if (string.IsNullOrWhiteSpace(mimeType))
+            {
                 return null;
+            }
 
-            if (mimeType.IndexOf(EPubFormat.ContentType, StringComparison.Ordinal) == -1)
+            if (mimeType.IndexOf("application/epub+zip", StringComparison.Ordinal) == -1)
+            {
                 return null;
+            }
 
             var fingerprint = new EPubFormat();
 

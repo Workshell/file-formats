@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ namespace Workshell.FileFormats.Formats.Executables
 
     public class PortableExecutableFormat : ExecutableFormat
     {
-        private static string[] _contentTypes => new[] { "application/vnd.microsoft.portable-executable" };
-        private static string[] _extensions => new[] { "exe", "dll", "ocx", "cpl", "sys", "scr", "ax" };
+        private static readonly string[] _contentTypes = { "application/vnd.microsoft.portable-executable" };
+        private static readonly string[] _extensions = { "exe", "dll", "ocx", "cpl", "sys", "scr", "ax" };
 
-        internal PortableExecutableFormat(PEImageFormat format, bool isCLR) : base(_contentTypes, _extensions)
+        internal PortableExecutableFormat(PEImageFormat format, bool isCLR) : base(_contentTypes, _extensions, "Portable Executable")
         {
             Format = format;
             IsCLR = isCLR;

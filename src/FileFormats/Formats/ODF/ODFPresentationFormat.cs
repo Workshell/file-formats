@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,10 @@ namespace Workshell.FileFormats.Formats.ODF
 {
     public class ODFPresentationFormat : ODFZipFormat
     {
-        internal const string ContentType = "application/vnd.oasis.opendocument.presentation";
+        private static readonly string[] _contentTypes = { "application/vnd.oasis.opendocument.presentation" };
+        private static readonly string[] _extensions = { "odp" };
 
-        private static string[] _contentTypes => new[] { ContentType };
-        private static string[] _extensions => new[] { "odp" };
-
-        public ODFPresentationFormat() : base(_contentTypes, _extensions)
+        public ODFPresentationFormat() : base(_contentTypes, _extensions, "OpenOffice Presentation")
         {
         }
     }

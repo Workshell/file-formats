@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Media;
 using Workshell.FileFormats.Scanners.Containers;
 
@@ -42,7 +43,9 @@ namespace Workshell.FileFormats.Scanners.Media
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             var fingerprint = new WebMFormat();
 
@@ -52,7 +55,9 @@ namespace Workshell.FileFormats.Scanners.Media
         protected override bool ValidateStartBytes(FileFormatScanJob job)
         {
             if (!base.ValidateStartBytes(job))
+            {
                 return false;
+            }
 
             const string cacheKey = "IsWebM";
 
