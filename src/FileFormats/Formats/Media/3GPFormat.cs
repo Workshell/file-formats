@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class ThreeGPFormat : BaseMediaFileFormat
+    public class ThreeGPFormat : BaseMediaFileFormat, IVideoFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "video/3gpp", "audio/3gpp" };
         private static readonly string[] _extensions = { "3gp" };

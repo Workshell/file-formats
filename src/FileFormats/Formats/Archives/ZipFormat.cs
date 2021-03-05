@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Archives
 {
-    public class ZipFormat : ArchiveFormat
+    public class ZipFormat : ArchiveFormat, IZipFormat
     {
         private static readonly string[] _contentTypes = { "application/zip" };
         private static readonly string[] _extensions = { "zip", "zipx" };

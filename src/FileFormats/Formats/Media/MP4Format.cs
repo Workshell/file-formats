@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class MP4Format : BaseMediaFileFormat
+    public class MP4Format : BaseMediaFileFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/mp4" };
         private static readonly string[] _extensions = { "mp4" };

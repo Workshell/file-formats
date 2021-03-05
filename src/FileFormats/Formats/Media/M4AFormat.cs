@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class M4AFormat : BaseMediaFileFormat
+    public class M4AFormat : BaseMediaFileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/m4a;audio/mp4" };
         private static readonly string[] _extensions = { "m4a" };

@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Images
 {
-    public abstract class ImageFormat : FileFormat
+    public abstract class ImageFormat : FileFormat, IImageFormat
     {
         protected ImageFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

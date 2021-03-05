@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class FLACFormat : FileFormat
+    public class FLACFormat : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/flac" };
         private static readonly string[] _extensions = { "flac" };

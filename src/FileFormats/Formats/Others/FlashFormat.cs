@@ -34,7 +34,7 @@ namespace Workshell.FileFormats.Formats
         CompressedLZMA
     }
 
-    public class FlashFormat : FileFormat
+    public class FlashFormat : FileFormat, IFlashFormat
     {
         private static string[] _contentTypes => new[] { "application/vnd.adobe.flash-movie", "application/x-shockwave-flash" };
         private static string[] _extensions => new[] { "swf" };

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 
 using Workshell.FileFormats.Formats.Microsoft;
+using Workshell.FileFormats.Formats.Microsoft.Legacy;
 using Workshell.FileFormats.OpenMCDF;
 using Workshell.FileFormats.Scanners.Containers;
 

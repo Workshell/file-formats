@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class QuickTimeFormat : BaseMediaFileFormat
+    public class QuickTimeFormat : BaseMediaFileFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/quicktime" };
         private static readonly string[] _extensions = { "mov", "qt" };

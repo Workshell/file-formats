@@ -26,7 +26,7 @@ using System.IO;
 
 namespace Workshell.FileFormats.Formats.Archives
 {
-    public abstract class ArchiveFormat : FileFormat
+    public abstract class ArchiveFormat : FileFormat, IArchiveFormat
     {
         protected ArchiveFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

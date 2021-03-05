@@ -26,7 +26,7 @@ using System.IO;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class FlashVideoFormat : FileFormat
+    public class FlashVideoFormat : FileFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/x-flv" };
         private static readonly string[] _extensions = { "flv" };

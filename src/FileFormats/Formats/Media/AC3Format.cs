@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class AC3Format : FileFormat
+    public class AC3Format : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/ac3" };
         private static readonly string[] _extensions = { "ac3" };

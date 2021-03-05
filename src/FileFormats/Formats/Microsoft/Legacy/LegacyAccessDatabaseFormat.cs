@@ -26,7 +26,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
-    public class LegacyAccessDatabaseFormat : FileFormat
+    public class LegacyAccessDatabaseFormat : FileFormat, ILegacyOfficeFormat
     {
         private static readonly string[] _contentTypes = {"application/x-msaccess" };
         private static readonly string[] _extensions = { "mdb" };

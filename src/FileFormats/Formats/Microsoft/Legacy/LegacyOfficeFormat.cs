@@ -29,7 +29,7 @@ using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
-    public abstract class LegacyOfficeFormat : CompoundFileStorageFormat
+    public abstract class LegacyOfficeFormat : CompoundDocumentFormat, ILegacyOfficeFormat
     {
         protected LegacyOfficeFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class AMRFormat : FileFormat
+    public class AMRFormat : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/amr", "audio/3gpp", "audio/3gpp2" };
         private static readonly string[] _extensions = { "amr", "3ga" };

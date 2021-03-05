@@ -46,7 +46,7 @@ namespace Workshell.FileFormats.Scanners.Containers
                 return null;
             }
 
-            var fingerprint = new CompoundFileStorageFormat();
+            var fingerprint = new CompoundDocumentFormat();
 
             return fingerprint;
         }

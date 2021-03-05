@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class AdvancedSystemsFormat : FileFormat
+    public class AdvancedSystemsFormat : FileFormat, IAudioFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/x-ms-asf", "application/vnd.ms-asf" };
         private static readonly string[] _extensions = { "asf", "wmv", "wma" };

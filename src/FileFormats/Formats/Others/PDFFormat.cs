@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats
 {
-    public class PDFFormat : FileFormat
+    public class PDFFormat : FileFormat, IPDFFormat
     {
         private static readonly string[] _contentTypes = { "application/pdf", "application/x-pdf" };
         private static readonly string[] _extensions = { "pdf" };

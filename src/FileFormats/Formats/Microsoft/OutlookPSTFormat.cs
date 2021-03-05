@@ -33,7 +33,7 @@ namespace Workshell.FileFormats.Formats.Microsoft
         ANSI
     }
 
-    public class OutlookPSTFormat : FileFormat
+    public class OutlookPSTFormat : FileFormat, IOfficeFormat
     {
         private static readonly string[] _contentTypes = { "application/vnd.ms-outlook" };
         private static readonly string[] _extensions = { "pst" };
