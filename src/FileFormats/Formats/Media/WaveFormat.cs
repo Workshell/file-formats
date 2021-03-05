@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Media
 {
     public class WaveFormat : RIFFFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "audio/wav", "audio/wave", "audio/vnd.wave", "video/x-wav" };
-        private static readonly string[] _extensions = new string[] { "wav" };
+        private static readonly string[] _contentTypes = { "audio/wav", "audio/wave", "audio/vnd.wave", "video/x-wav" };
+        private static readonly string[] _extensions = { "wav" };
 
-        public WaveFormat() : base(_contentTypes, _extensions)
+        public WaveFormat() : base(_contentTypes, _extensions, "Wave Audio")
         {
 
         }

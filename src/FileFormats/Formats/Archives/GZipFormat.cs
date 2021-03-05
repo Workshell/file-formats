@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,10 @@ namespace Workshell.FileFormats.Formats.Archives
 {
     public class GZipFormat : ArchiveFormat
     {
-        private static string[] _contentTypes => new[] { "application/gzip" };
-        private static string[] _extensions => new[] { "gz" };
+        private static readonly string[] _contentTypes = { "application/gzip" };
+        private static readonly string[] _extensions = { "gz" };
 
-        public GZipFormat() : base(_contentTypes, _extensions)
+        public GZipFormat() : base(_contentTypes, _extensions, "GZip")
         {
         }
 

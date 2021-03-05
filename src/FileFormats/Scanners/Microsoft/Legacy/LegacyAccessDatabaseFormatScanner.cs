@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
 
 namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
@@ -35,13 +36,19 @@ namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < 20)
+            {
                 return null;
+            }
 
             if (!FileFormatUtils.MatchBytes(job.StartBytes, 4, Signature))
+            {
                 return null;
+            }
 
             var fingerprint = new LegacyAccessDatabaseFormat();
 

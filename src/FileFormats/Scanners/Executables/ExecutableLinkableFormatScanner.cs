@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 using Workshell.FileFormats.Formats.Executables;
 
 namespace Workshell.FileFormats.Scanners.Executables
@@ -41,19 +42,27 @@ namespace Workshell.FileFormats.Scanners.Executables
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < 1024)
+            {
                 return null;
+            }
 
             if (!FileFormatUtils.MatchBytes(job.StartBytes, 0, Signature))
+            {
                 return null;
+            }
 
             var is32Bit = (job.StartBytes[4] == 0x01);
             var is64Bit = (job.StartBytes[4] == 0x02);
 
             if (!is32Bit && !is64Bit)
+            {
                 return null;
+            }
 
             ELFImageFormat imageFormat;
 
@@ -70,7 +79,9 @@ namespace Workshell.FileFormats.Scanners.Executables
             var bigEnd = (job.StartBytes[5] == 0x02);
 
             if (!littleEnd && !bigEnd)
+            {
                 return null;
+            }
 
             ELFImageEndianness imageEndianness;
 
@@ -84,12 +95,16 @@ namespace Workshell.FileFormats.Scanners.Executables
             }
 
             if (job.StartBytes[6] != 0x01)
+            {
                 return null;
+            }
 
             var version = FileFormatUtils.ReadUInt32(job.StartBytes, 20, bigEnd);
 
             if (version != 1)
+            {
                 return null;
+            }
 
             var fingerprint = new ELFExecutableFormat(imageFormat, imageEndianness);
 

@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ namespace Workshell.FileFormats.Formats
         private static string[] _contentTypes => new[] { "application/vnd.adobe.flash-movie", "application/x-shockwave-flash" };
         private static string[] _extensions => new[] { "swf" };
 
-        public FlashFormat(FlashCompressionType compressionType = FlashCompressionType.Uncompressed) : base(_contentTypes, _extensions)
+        public FlashFormat(FlashCompressionType compressionType = FlashCompressionType.Uncompressed) : base(_contentTypes, _extensions, "Adobe Flash")
         {
         }
 

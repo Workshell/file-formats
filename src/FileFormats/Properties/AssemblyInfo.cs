@@ -5,7 +5,7 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Workshell Ltd")]
 [assembly: AssemblyProduct("Workshell File Formats")]
-[assembly: AssemblyCopyright("Copyright © Workshell Ltd")]
+[assembly: AssemblyCopyright("Copyright ©2021 Workshell Ltd")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
     public class LegacyAccessDatabaseFormat : FileFormat
     {
-        private static string[] _contentTypes => new[] {"application/x-msaccess" };
-        private static string[] _extensions => new[] { "mdb" };
+        private static readonly string[] _contentTypes = {"application/x-msaccess" };
+        private static readonly string[] _extensions = { "mdb" };
 
-        public LegacyAccessDatabaseFormat() : base(_contentTypes, _extensions)
+        public LegacyAccessDatabaseFormat() : base(_contentTypes, _extensions, "Microsoft Access Database (Classic)")
         {
         }
     }

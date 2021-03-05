@@ -148,6 +148,7 @@ Take a look at the existing formats for reference implementations.
 |Archive Formats|7-Zip|.7z
 ||BZip|.bz2
 ||Cabinet|.cab
+||GZip|.gz
 ||RAR|.rar
 ||Zip|.zip<br/>.zipx
 |Containers|Java Archive|.jar

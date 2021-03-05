@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -89,10 +89,14 @@ namespace Workshell.FileFormats
             var numRead = stream.Read(buffer,0,buffer.Length);
 
             if (!allowSmaller && numRead < size)
+            {
                 throw new IOException("Could not read all of structure from stream.");
+            }
 
             if (numRead < size)
+            {
                 return default(T);
+            }
 
             return Read<T>(buffer);
         }
@@ -114,7 +118,9 @@ namespace Workshell.FileFormats
         public static short ReadInt16(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(short))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(short)];
             var idx = 0;
@@ -126,7 +132,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToInt16(buffer, 0);
         }
@@ -141,7 +149,9 @@ namespace Workshell.FileFormats
         public static int ReadInt32(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(int))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(int)];
             var idx = 0;
@@ -153,7 +163,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToInt32(buffer, 0);
         }
@@ -168,7 +180,9 @@ namespace Workshell.FileFormats
         public static long ReadInt64(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(long))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(long)];
             var idx = 0;
@@ -180,7 +194,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToInt64(buffer, 0);
         }
@@ -195,7 +211,9 @@ namespace Workshell.FileFormats
         public static ushort ReadUInt16(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length < sizeof(ushort))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(ushort)];
             var idx = 0;
@@ -207,7 +225,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToUInt16(buffer, 0);
         }
@@ -222,7 +242,9 @@ namespace Workshell.FileFormats
         public static uint ReadUInt32(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length < sizeof(uint))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(uint)];
             var idx = 0;
@@ -234,7 +256,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToUInt32(buffer, 0);
         }
@@ -249,7 +273,9 @@ namespace Workshell.FileFormats
         public static ulong ReadUInt64(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(ulong))
+            {
                 throw new ArgumentException("Invalid bytes specified.", nameof(bytes));
+            }
 
             var buffer = new byte[sizeof(ulong)];
             var idx = 0;
@@ -261,7 +287,9 @@ namespace Workshell.FileFormats
             }
 
             if (bigEndian)
+            {
                 buffer = Swap(buffer);
+            }
 
             return BitConverter.ToUInt64(buffer,0);
         }
@@ -283,7 +311,9 @@ namespace Workshell.FileFormats
             var realSize = size;
 
             if ((offset + size) > bytes.Length)
+            {
                 realSize = bytes.Length - offset;
+            }
 
             var result = new byte[realSize];
 
@@ -357,10 +387,14 @@ namespace Workshell.FileFormats
         public static bool IsNullOrEmpty<T>(T[] array)
         {
             if (array == null)
+            {
                 return true;
+            }
 
             if (array.Length == 0)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -401,13 +435,19 @@ namespace Workshell.FileFormats
         public static bool MatchBytes(byte[] input, int offset, int length, byte?[] pattern)
         {
             if (input == null)
+            {
                 throw new ArgumentNullException(nameof(input), "No input bytes specified.");
+            }
 
             if (pattern == null)
+            {
                 throw new ArgumentNullException(nameof(pattern), "No pattern bytes specified.");
+            }
 
             if (length < pattern.Length)
+            {
                 throw new ArgumentException("Pattern cannot be smaller than specified input length.", nameof(pattern));
+            }
 
             var idx = 0;
 
@@ -417,7 +457,9 @@ namespace Workshell.FileFormats
                 var patternByte = pattern[idx];
 
                 if (patternByte != null && inputByte != patternByte)
+                {
                     return false;
+                }
 
                 idx++;
             }

@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class AIFFFormat : FileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "audio/aiff", "audio/x-aiff" };
-        private static readonly string[] _extensions = new string[] { "aiff", "aif", "aifc" };
+        private static readonly string[] _contentTypes = { "audio/aiff", "audio/x-aiff" };
+        private static readonly string[] _extensions = { "aiff", "aif", "aifc" };
 
-        public AIFFFormat() : base(_contentTypes, _extensions)
+        public AIFFFormat() : base(_contentTypes, _extensions, "Audio Interchange File Format")
         {
 
         }

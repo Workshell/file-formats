@@ -23,24 +23,39 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
-namespace Workshell.FileFormats.Formats.Containers
+namespace Workshell.FileFormats.Formats.Executables
 {
-    public class CompoundFileStorageFormat : FileFormat
+    public enum MachOImageFormat : byte
     {
-        public CompoundFileStorageFormat() : base(new string[0], new string[0], string.Empty)
-        {
+        _32Bit,
+        _64Bit
+    }
 
-        }
+    public enum MachOImageEndianness : byte
+    {
+        Little,
+        Big
+    }
 
-        protected CompoundFileStorageFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
+    public class MachOExecutableFormat : ExecutableFormat
+    {
+        private static readonly string[] _contentTypes = new string[0];
+        private static readonly string[] _extensions = { "o", "dylib", "bundle" };
+
+        internal MachOExecutableFormat(MachOImageFormat format, MachOImageEndianness endianness) : base(_contentTypes, _extensions, "Mach-O")
         {
+            Format = format;
+            Endianness = endianness;
         }
 
         #region Properties
 
-        public override int SortIndex => 10;
+        public override int SortIndex => 20;
+        public MachOImageFormat Format { get; }
+        public MachOImageEndianness Endianness { get; }
 
         #endregion
     }

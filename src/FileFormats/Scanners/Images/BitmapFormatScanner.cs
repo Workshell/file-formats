@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Images;
 
 namespace Workshell.FileFormats.Scanners.Images
@@ -69,20 +70,28 @@ namespace Workshell.FileFormats.Scanners.Images
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length <= (BitmapFileHeaderSize + BitmapInfoHeaderSize))
+            {
                 return null;
+            }
 
             var fileHeader = FileFormatUtils.Read<BitmapFileHeader>(job.StartBytes, 0, BitmapFileHeaderSize);
 
             if (!FileFormatUtils.MatchBytes(fileHeader.Signature, BitmapSignature))
+            {
                 return null;
+            }
 
             var infoHeader = FileFormatUtils.Read<BitmapInfoHeader>(job.StartBytes, BitmapFileHeaderSize, BitmapInfoHeaderSize);
 
             if (infoHeader.Size != BitmapInfoHeaderSize)
+            {
                 return null;
+            }
 
             var fingerprint = new BitmapImageFormat();
 

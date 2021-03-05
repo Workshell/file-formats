@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Executables;
 
 namespace Workshell.FileFormats.Scanners.Executables
@@ -201,37 +202,51 @@ namespace Workshell.FileFormats.Scanners.Executables
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < DOSHeaderSize + 64 + FileHeaderSize + OptionalHeader64Size)
+            {
                 return null;
+            }
 
             var dosHeader = FileFormatUtils.Read<DOSHeader>(job.StartBytes, 0, DOSHeaderSize);
 
             if (dosHeader.e_magic != DOSMagicNumber)
+            {
                 return null;
+            }
 
-            if (dosHeader.e_lfanew == 0 || 
-                dosHeader.e_lfanew >= (256 * (1024 * 1024)) || 
-                dosHeader.e_lfanew % 4 != 0 || 
-                dosHeader.e_lfanew < DOSHeaderSize || 
+            if (dosHeader.e_lfanew == 0 ||
+                dosHeader.e_lfanew >= (256 * (1024 * 1024)) ||
+                dosHeader.e_lfanew % 4 != 0 ||
+                dosHeader.e_lfanew < DOSHeaderSize ||
                 dosHeader.e_lfanew >= job.StartBytes.Length)
+            {
                 return null;
+            }
 
             if (dosHeader.e_lfanew < DOSHeaderSize)
+            {
                 return null;
+            }
 
             var stubOffset = DOSHeaderSize;
             var stubSize = dosHeader.e_lfanew - DOSHeaderSize;
 
             if ((stubOffset + stubSize) >= job.StartBytes.Length)
+            {
                 return null;
+            }
 
             var fileHeaderOffset = stubOffset + stubSize;
             var fileHeader = FileFormatUtils.Read<FileHeader>(job.StartBytes, fileHeaderOffset, FileHeaderSize);
 
             if (fileHeader.Signature != PEMagicNumber)
+            {
                 return null;
+            }
 
             var optHeaderOffset = fileHeaderOffset + FileHeaderSize;
             var magic = FileFormatUtils.ReadUInt16(job.StartBytes, optHeaderOffset);
@@ -239,14 +254,18 @@ namespace Workshell.FileFormats.Scanners.Executables
             var is64bit = (magic == (ushort)MagicType.PE32plus);
 
             if (!is32bit && !is64bit)
+            {
                 return null;
+            }
 
             DataDirectory clrDataDirectory;
 
             if (is32bit)
             {
                 if (optHeaderOffset + OptionalHeader32Size >= job.StartBytes.Length)
+                {
                     return null;
+                }
 
                 var optHeader = FileFormatUtils.Read<OptionalHeader32>(job.StartBytes, optHeaderOffset, OptionalHeader32Size);
 
@@ -255,7 +274,9 @@ namespace Workshell.FileFormats.Scanners.Executables
             else
             {
                 if (optHeaderOffset + OptionalHeader64Size >= job.StartBytes.Length)
+                {
                     return null;
+                }
 
                 var optHeader = FileFormatUtils.Read<OptionalHeader64>(job.StartBytes, optHeaderOffset, OptionalHeader64Size);
 

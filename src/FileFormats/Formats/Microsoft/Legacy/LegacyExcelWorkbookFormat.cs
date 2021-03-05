@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
     public class LegacyExcelWorkbookFormat : LegacyOfficeFormat
     {
-        private static string[] _contentTypes => new[] { "application/vnd.ms-excel" };
-        private static string[] _extensions => new[] { "xls", "xlt", "xla" };
+        private static readonly string[] _contentTypes = { "application/vnd.ms-excel" };
+        private static readonly string[] _extensions = { "xls", "xlt", "xla" };
 
-        public LegacyExcelWorkbookFormat() : base(_contentTypes, _extensions)
+        public LegacyExcelWorkbookFormat() : base(_contentTypes, _extensions, "Microsoft Excel Workbook, Template or Application (Classic)")
         {
         }
     }

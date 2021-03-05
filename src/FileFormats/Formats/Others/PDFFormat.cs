@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats
 {
     public class PDFFormat : FileFormat
     {
-        private static string[] _contentTypes => new[] { "application/pdf", "application/x-pdf" };
-        private static string[] _extensions => new[] { "pdf" };
+        private static readonly string[] _contentTypes = { "application/pdf", "application/x-pdf" };
+        private static readonly string[] _extensions = { "pdf" };
 
-        public PDFFormat() : base(_contentTypes, _extensions)
+        public PDFFormat() : base(_contentTypes, _extensions, "Adobe PDF Document")
         {
         }
 

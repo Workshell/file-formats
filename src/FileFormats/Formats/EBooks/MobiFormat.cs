@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,10 @@ namespace Workshell.FileFormats.Formats.EBooks
 {
     public class MobiFormat : FileFormat
     {
-        private static string[] _contentTypes => new[] { "application/x-mobipocket-ebook" };
-        private static string[] _extensions => new[] { "mobi" };
+        private static readonly string[] _contentTypes = { "application/x-mobipocket-ebook" };
+        private static readonly string[] _extensions = { "mobi" };
 
-        public MobiFormat() : base(_contentTypes, _extensions)
+        public MobiFormat() : base(_contentTypes, _extensions, "Amazon/MobiPocket eBook")
         {
         }
 

@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,10 @@ namespace Workshell.FileFormats.Formats.Microsoft
 
     public class OutlookPSTFormat : FileFormat
     {
-        private static string[] _contentTypes => new[] { "application/vnd.ms-outlook" };
-        private static string[] _extensions => new[] { "pst" };
+        private static readonly string[] _contentTypes = { "application/vnd.ms-outlook" };
+        private static readonly string[] _extensions = { "pst" };
 
-        public OutlookPSTFormat(PSTFormat format) : base(_contentTypes, _extensions)
+        public OutlookPSTFormat(PSTFormat format) : base(_contentTypes, _extensions, "Microsoft Outlook")
         {
             Format = format;
         }

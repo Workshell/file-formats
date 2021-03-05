@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft.OOXml
 {
     public class PowerPointPresentationFormat : OfficeZipFormat
     {
-        private static string[] _contentTypes => new[] {"application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.ms-powerpoint.presentation.macroEnabled.12" };
-        private static string[] _extensions => new[] { "pptx", "pptm" };
+        private static readonly string[] _contentTypes = {"application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.ms-powerpoint.presentation.macroEnabled.12" };
+        private static readonly string[] _extensions = { "pptx", "pptm" };
 
-        public PowerPointPresentationFormat(bool macros = false) : base(_contentTypes, _extensions)
+        public PowerPointPresentationFormat(bool macros = false) : base(_contentTypes, _extensions, "Microsoft PowerPoint Presentation")
         {
             Macros = macros;
         }
