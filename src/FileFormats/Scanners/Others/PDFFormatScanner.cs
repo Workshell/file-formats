@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2021, Workshell Ltd
+//  Copyright(c) 2018, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-
 using Workshell.FileFormats.Formats;
 
 namespace Workshell.FileFormats.Scanners
@@ -30,21 +29,19 @@ namespace Workshell.FileFormats.Scanners
     public class PDFFormatScanner : FileFormatScanner
     {
         private static readonly byte?[] StartSignature = new byte?[] { 0x25, 0x50, 0x44, 0x46, 0x2D };
-        private static readonly byte?[] EndSignature = new byte?[] { 0x45, 0x4F, 0x46, 0x0A };
+        private static readonly byte?[] EndSignature1 = new byte?[] { 0x25, 0x45, 0x4F, 0x46 };
+        private static readonly byte?[] EndSignature2 = new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0A };
+        private static readonly byte?[] EndSignature3 = new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A };
 
         #region Methods
 
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job.StartBytes))
-            {
                 return null;
-            }
 
             if (!ValidateEndBytes(job.EndBytes))
-            {
                 return null;
-            }
 
             var fingerprint = new PDFFormat();
 
@@ -54,19 +51,13 @@ namespace Workshell.FileFormats.Scanners
         private bool ValidateStartBytes(byte[] bytes)
         {
             if (FileFormatUtils.IsNullOrEmpty(bytes))
-            {
                 return false;
-            }
 
             if (bytes.Length < 20)
-            {
                 return false;
-            }
 
             if (!FileFormatUtils.MatchBytes(bytes, StartSignature))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -74,19 +65,15 @@ namespace Workshell.FileFormats.Scanners
         private bool ValidateEndBytes(byte[] bytes)
         {
             if (FileFormatUtils.IsNullOrEmpty(bytes))
-            {
                 return false;
-            }
 
-            if (bytes.Length < EndSignature.Length)
-            {
+            if (bytes.Length < EndSignature3.Length)
                 return false;
-            }
 
-            if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature.Length, EndSignature))
-            {
+            if (!FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature1.Length, EndSignature1) &&
+                !FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature2.Length, EndSignature2) &&
+                !FileFormatUtils.MatchBytes(bytes, bytes.Length - EndSignature3.Length, EndSignature3))
                 return false;
-            }
 
             return true;
         }
