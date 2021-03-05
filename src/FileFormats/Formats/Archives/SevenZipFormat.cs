@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Formats.Archives
         private static readonly string[] _contentTypes = { "application/x-7z-compressed" };
         private static readonly string[] _extensions = { "7z" };
 
-        public SevenZipFormat() : base(_contentTypes, _extensions, "7-Zip")
+        public SevenZipFormat() : base(_contentTypes, _extensions, "7-Zip Archive")
         {
         }
 

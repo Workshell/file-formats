@@ -75,6 +75,7 @@ namespace Workshell.FileFormats.Demonstration
             Console.WriteLine($"Class         : {fingerprint.GetType().Name}");
             Console.WriteLine($"Content Types : {contentTypes}");
             Console.WriteLine($"Extensions    : {extensions}");
+            Console.WriteLine($"Description   : {fingerprint.Description}");
             Console.WriteLine();
         }
     }

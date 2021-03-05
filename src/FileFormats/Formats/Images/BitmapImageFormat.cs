@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Formats.Images
         private static readonly string[] _contentTypes ={ "image/bmp", "image/x-bmp" };
         private static readonly string[] _extensions = { "bmp" };
 
-        public BitmapImageFormat() : base(_contentTypes, _extensions, "Bitmap")
+        public BitmapImageFormat() : base(_contentTypes, _extensions, "Bitmap Image")
         {
         }
 

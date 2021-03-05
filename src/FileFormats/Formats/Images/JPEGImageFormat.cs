@@ -32,7 +32,7 @@ namespace Workshell.FileFormats.Formats.Images
         private static readonly string[] _contentTypes = { "image/jpeg" };
         private static readonly string[] _extensions = { "jpg", "jpeg", "jpe", "jif", "jfif", "jfi" };
 
-        public JPEGImageFormat(bool exif = false) : base(_contentTypes, _extensions, "JPEG")
+        public JPEGImageFormat(bool exif = false) : base(_contentTypes, _extensions, "JPEG Image")
         {
             Exif = exif;
         }

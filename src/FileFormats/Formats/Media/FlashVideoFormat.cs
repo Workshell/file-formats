@@ -31,7 +31,7 @@ namespace Workshell.FileFormats.Formats.Media
         private static readonly string[] _contentTypes = { "video/x-flv" };
         private static readonly string[] _extensions = { "flv" };
 
-        public FlashVideoFormat() : base(_contentTypes, _extensions, "Flash Video")
+        public FlashVideoFormat() : base(_contentTypes, _extensions, "Adobe Flash Video")
         {
 
         }
