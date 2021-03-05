@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class OggFormat : FileFormat
+    public class OggFormat : FileFormat, IAudioFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/ogg", "audio/ogg", "application/ogg" };
         private static readonly string[] _extensions = { "ogg", "ogv", "oga", "ogx", "ogm", "spx", "opus" };

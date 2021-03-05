@@ -27,14 +27,14 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Containers
 {
-    public class CompoundFileStorageFormat : FileFormat
+    public class CompoundDocumentFormat : FileFormat, ICompoundDocumentFormat
     {
-        public CompoundFileStorageFormat() : base(new string[0], new string[0], string.Empty)
+        public CompoundDocumentFormat() : base(new string[0], new string[0], string.Empty)
         {
 
         }
 
-        protected CompoundFileStorageFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
+        protected CompoundDocumentFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {
         }
 

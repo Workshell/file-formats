@@ -27,7 +27,7 @@ using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class MatroskaFormat : EBMLFormat
+    public class MatroskaFormat : EBMLFormat, IAudioFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/x-matroska", "audio/x-matroska" };
         private static readonly string[] _extensions = { "mkv", "mka", "mks", "mk3d" };

@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class RealAudioFormat : FileFormat
+    public class RealAudioFormat : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/vnd.rn-realaudio", "audio/x-pn-realaudio" };
         private static readonly string[] _extensions = { "ra", "rm", "ram" };

@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats
 {
-    public class XmlFormat : FileFormat
+    public class XmlFormat : FileFormat, IXmlFormat
     {
         private static string[] _contentTypes => new[] { "text/xml", "application/xml" };
         private static string[] _extensions => new[] { "xml" };

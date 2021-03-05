@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Containers
 {
-    public class RIFFFormat : FileFormat
+    public class RIFFFormat : FileFormat, IRIFFFormat
     {
         public RIFFFormat() : base(new string[0], new string[0], string.Empty)
         {

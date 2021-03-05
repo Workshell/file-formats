@@ -28,7 +28,7 @@ using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.EBooks
 {
-    public class EPubFormat : ZipFormat
+    public class EPubFormat : ZipFormat, IEBookFormat
     {
         private static readonly string[] _contentTypes = { "application/epub+zip" };
         private static readonly string[] _extensions = { "epub" };

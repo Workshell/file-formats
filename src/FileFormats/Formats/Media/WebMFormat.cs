@@ -28,7 +28,7 @@ using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class WebMFormat : EBMLFormat
+    public class WebMFormat : EBMLFormat, IAudioFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/webm", "audio/webm" };
         private static readonly string[] _extensions = { "webm" };

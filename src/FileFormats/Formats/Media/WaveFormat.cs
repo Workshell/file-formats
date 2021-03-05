@@ -29,7 +29,7 @@ using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class WaveFormat : RIFFFormat
+    public class WaveFormat : RIFFFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/wav", "audio/wave", "audio/vnd.wave", "video/x-wav" };
         private static readonly string[] _extensions = { "wav" };

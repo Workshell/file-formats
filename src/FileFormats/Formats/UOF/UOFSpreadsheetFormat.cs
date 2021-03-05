@@ -26,7 +26,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.UOF
 {
-    public class UOFSpreadsheetFormat : XmlFormat
+    public class UOFSpreadsheetFormat : XmlFormat, IUnifiedOfficeFormat
     {
         private static readonly string[] _contentTypes = { "text/xml", "application/vnd.uof.spreadsheet" };
         private static readonly string[] _extensions = { "uos", "uof" };

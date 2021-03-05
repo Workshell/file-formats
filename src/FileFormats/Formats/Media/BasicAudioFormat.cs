@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class BasicAudioFormat : FileFormat
+    public class BasicAudioFormat : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/basic" };
         private static readonly string[] _extensions = { "au", "snd" };

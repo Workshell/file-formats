@@ -26,7 +26,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.ODF
 {
-    public class ODFFlatSpreadsheetFormat : XmlFormat
+    public class ODFFlatSpreadsheetFormat : XmlFormat, IOpenOfficeFlatFormat
     {
         private static readonly string[] _contentTypes = { "text/xml", "application/vnd.oasis.opendocument.spreadsheet" };
         private static readonly string[] _extensions = { "fods" };

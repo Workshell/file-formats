@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class AIFFFormat : FileFormat
+    public class AIFFFormat : FileFormat, IAudioFormat
     {
         private static readonly string[] _contentTypes = { "audio/aiff", "audio/x-aiff" };
         private static readonly string[] _extensions = { "aiff", "aif", "aifc" };

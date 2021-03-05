@@ -28,7 +28,7 @@ using Workshell.FileFormats.Formats.Containers;
 
 namespace Workshell.FileFormats.Formats.Media
 {
-    public class AVIFormat : RIFFFormat
+    public class AVIFormat : RIFFFormat, IVideoFormat
     {
         private static readonly string[] _contentTypes = { "video/avi", "video/vnd.avi", "video/msvideo", "video/x-msvideo" };
         private static readonly string[] _extensions = { "avi" };

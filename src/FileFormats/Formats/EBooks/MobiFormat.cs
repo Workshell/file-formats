@@ -28,7 +28,7 @@ using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.EBooks
 {
-    public class MobiFormat : FileFormat
+    public class MobiFormat : FileFormat, IEBookFormat
     {
         private static readonly string[] _contentTypes = { "application/x-mobipocket-ebook" };
         private static readonly string[] _extensions = { "mobi" };

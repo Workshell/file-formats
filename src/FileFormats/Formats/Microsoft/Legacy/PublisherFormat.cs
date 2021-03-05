@@ -24,9 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Workshell.FileFormats.Formats.Microsoft.Legacy;
-
-namespace Workshell.FileFormats.Formats.Microsoft
+namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
     public class PublisherFormat : LegacyOfficeFormat
     {

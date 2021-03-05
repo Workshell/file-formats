@@ -26,7 +26,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Microsoft
 {
-    public class AccessDatabaseFormat : FileFormat
+    public class AccessDatabaseFormat : FileFormat, IOfficeFormat
     {
         private static readonly string[] _contentTypes = { "application/msaccess" };
         private static readonly string[] _extensions = { "accdb" };

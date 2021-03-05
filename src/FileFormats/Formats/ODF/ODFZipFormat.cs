@@ -29,7 +29,7 @@ using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.ODF
 {
-    public abstract class ODFZipFormat : ZipFormat
+    public abstract class ODFZipFormat : ZipFormat, IOpenOfficeFormat
     {
         protected ODFZipFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

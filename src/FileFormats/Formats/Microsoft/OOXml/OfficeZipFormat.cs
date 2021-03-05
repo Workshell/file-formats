@@ -29,7 +29,7 @@ using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.Microsoft.OOXml
 {
-    public abstract class OfficeZipFormat : ZipFormat
+    public abstract class OfficeZipFormat : ZipFormat, IOpenXMLFormat
     {
         protected OfficeZipFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

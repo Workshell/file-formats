@@ -37,7 +37,7 @@ using Workshell.FileFormats.Scanners.UOF;
 
 namespace Workshell.FileFormats
 {
-    public abstract class FileFormat
+    public abstract class FileFormat : IFileFormat
     {
         private const int FourKilobytes = 1024 * 4; // 4K
 
