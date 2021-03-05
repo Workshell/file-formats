@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.Containers
 {
     public class NuGetPackageFormat : ZipFormat
     {
-        private static string[] _contentTypes => new[] { "application/zip" };
-        private static string[] _extensions => new[] { "nupkg" };
+        private static readonly string[] _contentTypes = { "application/zip" };
+        private static readonly string[] _extensions = { "nupkg" };
 
-        public NuGetPackageFormat() : base(_contentTypes, _extensions)
+        public NuGetPackageFormat() : base(_contentTypes, _extensions, "NuGet Package")
         {
         }
 

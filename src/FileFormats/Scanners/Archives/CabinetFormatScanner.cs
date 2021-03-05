@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Scanners.Archives
@@ -60,18 +61,26 @@ namespace Workshell.FileFormats.Scanners.Archives
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < HeaderSize)
+            {
                 return null;
+            }
 
             var header = FileFormatUtils.Read<Header>(job.StartBytes, 0, HeaderSize);
 
             if (!FileFormatUtils.MatchBytes(header.Signature, Signature))
+            {
                 return null;
+            }
 
             if (!(header.VersionMajor == 1 && header.VersionMinor == 3))
+            {
                 return null;
+            }
 
             var fingerprint = new CabinetFormat();
 

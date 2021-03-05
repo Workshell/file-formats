@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Formats.EBooks
 {
     public class EPubFormat : ZipFormat
     {
-        internal const string ContentType = "application/epub+zip";
+        private static readonly string[] _contentTypes = { "application/epub+zip" };
+        private static readonly string[] _extensions = { "epub" };
 
-        private static string[] _contentTypes => new[] { ContentType };
-        private static string[] _extensions => new[] { "epub" };
-
-        public EPubFormat() : base(_contentTypes, _extensions)
+        public EPubFormat() : base(_contentTypes, _extensions, "ePub")
         {
         }
 

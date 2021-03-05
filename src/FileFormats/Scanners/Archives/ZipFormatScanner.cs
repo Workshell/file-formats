@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
+
 using Workshell.FileFormats.Formats.Archives;
 
 namespace Workshell.FileFormats.Scanners.Archives
@@ -59,10 +60,14 @@ namespace Workshell.FileFormats.Scanners.Archives
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             if (!Validate(job))
+            {
                 return null;
+            }
 
             var fingerprint = new ZipFormat();
 
@@ -89,7 +94,9 @@ namespace Workshell.FileFormats.Scanners.Archives
                     var header = FileFormatUtils.Read<ZipFileHeader>(job.StartBytes, 0, ZipFileHeaderSize);
 
                     if (header.Signature == ZipFileSignature)
+                    {
                         valid = true;
+                    }
                 }
             }
 

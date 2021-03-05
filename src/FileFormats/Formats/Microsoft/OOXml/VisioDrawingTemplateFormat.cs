@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft.OOXml
 {
     public class VisioDrawingTemplateFormat : OfficeZipFormat
     {
-        private static string[] _contentTypes => new[] {"application/vnd.ms-visio.template", "application/vnd.ms-visio.template.macroEnabled.12" };
-        private static string[] _extensions => new[] { "vstx", "vstm" };
+        private static readonly string[] _contentTypes = { "application/vnd.ms-visio.template", "application/vnd.ms-visio.template.macroEnabled.12" };
+        private static readonly string[] _extensions = { "vstx", "vstm" };
 
-        public VisioDrawingTemplateFormat(bool macros = false) : base(_contentTypes, _extensions)
+        public VisioDrawingTemplateFormat(bool macros = false) : base(_contentTypes, _extensions, "Microsoft Visio Drawing Template")
         {
             Macros = macros;
         }

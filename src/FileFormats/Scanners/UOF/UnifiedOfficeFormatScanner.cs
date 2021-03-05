@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+
 using Workshell.FileFormats.Formats.UOF;
 
 namespace Workshell.FileFormats.Scanners.UOF
@@ -46,30 +47,42 @@ namespace Workshell.FileFormats.Scanners.UOF
                 var xml = XDocument.Load(job.Stream);
 
                 if (xml.Root == null)
+                {
                     return null;
+                }
 
                 var ns = xml.Root.GetNamespaceOfPrefix("uof");
 
                 if (ns == null)
+                {
                     return null;
+                }
 
                 if (string.Compare(ns.NamespaceName, xml.Root.Name.NamespaceName, StringComparison.Ordinal) != 0)
+                {
                     return null;
+                }
 
                 if (string.Compare("UOF", xml.Root.Name.LocalName, StringComparison.Ordinal) != 0)
+                {
                     return null;
+                }
 
                 var attr = xml.Root.Attributes()
                     .Where(a => a.Name.NamespaceName == ns.NamespaceName)
                     .FirstOrDefault(a => a.Name.LocalName == "mimetype");
 
                 if (attr == null)
+                {
                     return null;
+                }
 
                 var mimeType = attr.Value;
 
                 if (!_mimeMap.ContainsKey(mimeType))
+                {
                     return null;
+                }
 
                 var type = _mimeMap[mimeType];
                 var fingerprint = (FileFormat)Activator.CreateInstance(type);

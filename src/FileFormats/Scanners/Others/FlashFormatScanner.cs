@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats;
 
 namespace Workshell.FileFormats.Scanners
@@ -37,10 +38,14 @@ namespace Workshell.FileFormats.Scanners
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (FileFormatUtils.IsNullOrEmpty(job.StartBytes))
+            {
                 return null;
+            }
 
             if (job.StartBytes.Length < 1024)
+            {
                 return null;
+            }
 
             FlashCompressionType? compressionType = null;
 
@@ -58,7 +63,9 @@ namespace Workshell.FileFormats.Scanners
             }
 
             if (compressionType == null)
+            {
                 return null;
+            }
 
             var fingerprint = new FlashFormat(compressionType.Value);
 

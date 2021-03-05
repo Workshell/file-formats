@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Images
 {
     public class TIFFImageFormat : ImageFormat
     {
-        private static string[] _contentTypes => new[] { "image/tiff" };
-        private static string[] _extensions => new[] { "tif", "tiff" };
+        private static readonly string[] _contentTypes = { "image/tiff" };
+        private static readonly string[] _extensions = { "tif", "tiff" };
 
-        public TIFFImageFormat() : base(_contentTypes, _extensions)
+        public TIFFImageFormat() : base(_contentTypes, _extensions, "Tagged Image File Format")
         {
         }
 

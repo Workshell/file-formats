@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,14 @@ namespace Workshell.FileFormats.Formats.Archives
 {
     public class ZipFormat : ArchiveFormat
     {
-        private static string[] _contentTypes => new[] { "application/zip" };
-        private static string[] _extensions => new[] { "zip", "zipx" };
+        private static readonly string[] _contentTypes = { "application/zip" };
+        private static readonly string[] _extensions = { "zip", "zipx" };
 
-        public ZipFormat() : base(_contentTypes, _extensions)
+        public ZipFormat() : base(_contentTypes, _extensions, "Zip Archive")
         {
         }
 
-        protected ZipFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions) : base(contentTypes, extensions)
+        protected ZipFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {
         }
 

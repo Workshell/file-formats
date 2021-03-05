@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using Workshell.FileFormats.Scanners.Archives;
 using Workshell.FileFormats.Scanners.Containers;
 using Workshell.FileFormats.Scanners.EBooks;
@@ -59,10 +60,11 @@ namespace Workshell.FileFormats
             OtherFormatScanners.Register();
         }
 
-        protected FileFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions)
+        protected FileFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description)
         {
             ContentTypes = contentTypes.ToArray();
             Extensions = extensions.ToArray();
+            Description = description;
             SortIndex = 0;
         }
 
@@ -112,8 +114,9 @@ namespace Workshell.FileFormats
 
         #region Properties
 
-        public virtual string[] ContentTypes { get; }
-        public virtual string[] Extensions { get; }
+        public string[] ContentTypes { get; }
+        public string[] Extensions { get; }
+        public string Description { get; }
         public virtual int SortIndex { get; }
 
         #endregion

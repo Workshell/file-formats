@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
 
 namespace Workshell.FileFormats.Formats.Microsoft
 {
     public class PublisherFormat : LegacyOfficeFormat
     {
-        private static string[] _contentTypes => new[] { "application/x-mspublisher" };
-        private static string[] _extensions => new[] { "pub" };
+        private static readonly string[] _contentTypes = { "application/x-mspublisher" };
+        private static readonly string[] _extensions = { "pub" };
 
-        public PublisherFormat() : base(_contentTypes, _extensions)
+        public PublisherFormat() : base(_contentTypes, _extensions, "Microsoft Publisher")
         {
         }
 

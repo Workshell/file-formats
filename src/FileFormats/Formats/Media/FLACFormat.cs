@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class FLACFormat : FileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "audio/flac" };
-        private static readonly string[] _extensions = new string[] { "flac" };
+        private static readonly string[] _contentTypes = { "audio/flac" };
+        private static readonly string[] _extensions = { "flac" };
 
-        public FLACFormat() : base(_contentTypes, _extensions)
+        public FLACFormat() : base(_contentTypes, _extensions, "Free Lossless Audio Codec")
         {
 
         }

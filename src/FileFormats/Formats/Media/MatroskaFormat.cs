@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class MatroskaFormat : EBMLFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "video/x-matroska", "audio/x-matroska" };
-        private static readonly string[] _extensions = new string[] { "mkv", "mka", "mks", "mk3d" };
+        private static readonly string[] _contentTypes = { "video/x-matroska", "audio/x-matroska" };
+        private static readonly string[] _extensions = { "mkv", "mka", "mks", "mk3d" };
 
-        public MatroskaFormat() : base(_contentTypes, _extensions)
+        public MatroskaFormat() : base(_contentTypes, _extensions, "Matroska")
         {
 
         }

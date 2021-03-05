@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,11 @@ namespace Workshell.FileFormats.Formats
         private static string[] _contentTypes => new[] { "text/xml", "application/xml" };
         private static string[] _extensions => new[] { "xml" };
 
-        public XmlFormat() : base(_contentTypes, _extensions)
+        public XmlFormat() : base(_contentTypes, _extensions, string.Empty)
         {
         }
 
-        protected XmlFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions) : base(contentTypes, extensions)
+        protected XmlFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {
         }
 

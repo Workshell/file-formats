@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
 using Workshell.FileFormats.OpenMCDF;
 using Workshell.FileFormats.Scanners.Containers;
@@ -35,7 +36,9 @@ namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
         public override FileFormat Match(FileFormatScanJob job)
         {
             if (!ValidateStartBytes(job))
+            {
                 return null;
+            }
 
             FileFormat fingerprint = null;
 
@@ -64,7 +67,9 @@ namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
                 }
 
                 if (hasWorkbook && hasSummary)
+                {
                     fingerprint = new LegacyVisioDrawingFormat();
+                }
             }
             catch
             {

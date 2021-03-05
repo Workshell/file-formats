@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class FlashVideoFormat : FileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "video/x-flv" };
-        private static readonly string[] _extensions = new string[] { "flv" };
+        private static readonly string[] _contentTypes = { "video/x-flv" };
+        private static readonly string[] _extensions = { "flv" };
 
-        public FlashVideoFormat() : base(_contentTypes, _extensions)
+        public FlashVideoFormat() : base(_contentTypes, _extensions, "Adobe Flash Video")
         {
 
         }

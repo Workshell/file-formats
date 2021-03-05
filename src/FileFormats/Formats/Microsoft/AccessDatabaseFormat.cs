@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft
 {
     public class AccessDatabaseFormat : FileFormat
     {
-        private static string[] _contentTypes => new[] {"application/msaccess" };
-        private static string[] _extensions => new[] { "accdb" };
+        private static readonly string[] _contentTypes = { "application/msaccess" };
+        private static readonly string[] _extensions = { "accdb" };
 
-        public AccessDatabaseFormat() : base(_contentTypes, _extensions)
+        public AccessDatabaseFormat() : base(_contentTypes, _extensions, "Microsoft Access Database")
         {
         }
 

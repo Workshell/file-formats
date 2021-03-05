@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ namespace Workshell.FileFormats.Formats.Microsoft.Legacy
 {
     public class LegacyPowerPointPresentationFormat : LegacyOfficeFormat
     {
-        private static string[] _contentTypes => new[] { "application/vnd.ms-powerpoint" };
-        private static string[] _extensions => new[] { "ppt", "pot", "pps", "ppa" };
+        private static readonly string[] _contentTypes = { "application/vnd.ms-powerpoint" };
+        private static readonly string[] _extensions = { "ppt", "pot", "pps", "ppa" };
 
-        public LegacyPowerPointPresentationFormat() : base(_contentTypes, _extensions)
+        public LegacyPowerPointPresentationFormat() : base(_contentTypes, _extensions, "Microsoft PowerPoint Presentation, Template, Slideshow or Application (Classic)")
         {
         }
     }

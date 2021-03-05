@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Archives
 {
     public class SevenZipFormat : ArchiveFormat
     {
-        private static string[] _contentTypes => new[] { "application/x-7z-compressed" };
-        private static string[] _extensions => new[] { "7z" };
+        private static readonly string[] _contentTypes = { "application/x-7z-compressed" };
+        private static readonly string[] _extensions = { "7z" };
 
-        public SevenZipFormat() : base(_contentTypes, _extensions)
+        public SevenZipFormat() : base(_contentTypes, _extensions, "7-Zip Archive")
         {
         }
 

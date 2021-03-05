@@ -1,5 +1,5 @@
 ﻿#region License
-//  Copyright(c) 2018, Workshell Ltd
+//  Copyright(c) 2021, Workshell Ltd
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ namespace Workshell.FileFormats.Formats.Media
 {
     public class ThreeGP2Format : BaseMediaFileFormat
     {
-        private static readonly string[] _contentTypes = new string[] { "video/3gpp2", "audio/3gpp2" };
-        private static readonly string[] _extensions = new string[] { "3g2" };
+        private static readonly string[] _contentTypes = { "video/3gpp2", "audio/3gpp2" };
+        private static readonly string[] _extensions = { "3g2" };
 
-        public ThreeGP2Format() : base(_contentTypes, _extensions)
+        public ThreeGP2Format() : base(_contentTypes, _extensions, "3GP2")
         {
 
         }
