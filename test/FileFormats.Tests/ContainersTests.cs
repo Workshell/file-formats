@@ -84,5 +84,31 @@ namespace Workshell.FileFormats.Tests
         }
 
         #endregion
+        
+        #region MSI Installer Databases
+
+        [Test]
+        public void Containers_MSI_Returns_Not_Null()
+        {
+            using (var stream = GetFileFromZip("container/test.msi"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.IsNotNull(fingerprint);
+            }
+        }
+
+        [Test]
+        public void Containers_MSI_Is_Correct_Format()
+        {
+            using (var stream = GetFileFromZip("container/test.msi"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.True(fingerprint is MSIFormat);
+            }
+        }
+
+        #endregion
     }
 }

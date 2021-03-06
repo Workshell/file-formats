@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.Generic;
+
+using OpenMcdf;
+
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
-using Workshell.FileFormats.OpenMCDF;
 using Workshell.FileFormats.Scanners.Containers;
 
 namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
@@ -46,7 +48,7 @@ namespace Workshell.FileFormats.Scanners.Microsoft.Legacy
                 var hasWorkbook = false;
                 var hasSummary = false;
 
-                using (var file = new CompoundFile(job.Stream))
+                using (var file = new CompoundFile(job.Stream, CFSUpdateMode.ReadOnly, CFSConfiguration.LeaveOpen))
                 {
                     var items = new List<CFItem>();
 
