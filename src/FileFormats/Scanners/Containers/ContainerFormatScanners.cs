@@ -31,7 +31,8 @@ namespace Workshell.FileFormats.Scanners.Containers
         {
             new CompoundFileStorageFormatScanner(),
             new NuGetPackageFormatScanner(),
-            new JavaArchiveFormatScanner()
+            new JavaArchiveFormatScanner(),
+            new MSIFormatScanner()
         };
 
         #region Methods

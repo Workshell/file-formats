@@ -23,9 +23,9 @@
 using System;
 using System.Collections.Generic;
 
-using Workshell.FileFormats.Formats.Microsoft;
+using OpenMcdf;
+
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
-using Workshell.FileFormats.OpenMCDF;
 using Workshell.FileFormats.Scanners.Containers;
 
 namespace Workshell.FileFormats.Scanners.Microsoft
@@ -45,7 +45,7 @@ namespace Workshell.FileFormats.Scanners.Microsoft
             var hasContents = false;
             var hasEnvelope = false;
 
-            using (var file = new CompoundFile(job.Stream))
+            using (var file = new CompoundFile(job.Stream, CFSUpdateMode.ReadOnly, CFSConfiguration.LeaveOpen))
             {
                 var items = new List<CFItem>();
 

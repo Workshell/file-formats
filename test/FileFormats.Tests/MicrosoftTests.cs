@@ -459,5 +459,31 @@ namespace Workshell.FileFormats.Tests
         }
 
         #endregion
+        
+        #region Outlook (Message)
+        
+        [Test]
+        public void Office_MSG_Returns_Not_Null()
+        {
+            using (var stream = GetFileFromZip("microsoft/test.msg"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.IsNotNull(fingerprint);
+            }
+        }
+
+        [Test]
+        public void Office_MSG_Is_Correct_Format()
+        {
+            using (var stream = GetFileFromZip("microsoft/test.msg"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.True(fingerprint is OutlookMessageFormat);
+            }
+        }
+        
+        #endregion
     }
 }

@@ -25,8 +25,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Workshell.FileFormats.Formats;
-
 namespace Workshell.FileFormats
 {
     public sealed class FileFormatScanJob

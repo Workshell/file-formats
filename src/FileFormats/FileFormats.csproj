@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <AssemblyName>Workshell.FileFormats</AssemblyName>
     <RootNamespace>Workshell.FileFormats</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -26,46 +26,11 @@
     <None Include="..\..\license.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Scanners\Archives\**" />
-    <EmbeddedResource Remove="Scanners\Archives\**" />
-    <None Remove="Scanners\Archives\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Scanners\Microsoft\OOXml\DotxFingerprint.cs" />
-    <Compile Remove="Scanners\Microsoft\OOXml\OOXmlFingerprint.cs" />
-    <Compile Remove="Scanners\Microsoft\OOXml\XlsAddinFingerprinter.cs" />
-    <Compile Remove="Scanners\Microsoft\OOXml\XlsBinaryFingerprinter.cs" />
-    <Compile Remove="Scanners\Microsoft\OOXml\XlsxFingerprinter.cs" />
-    <Compile Remove="Scanners\Microsoft\OOXml\XltxFingerprinter.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Scanners\Archives\BZipFormatScanner.cs" />
-    <Compile Include="Scanners\Archives\CabinetFormatScanner.cs" />
-    <Compile Include="Scanners\Archives\RARFingerprintScanner.cs" />
-    <Compile Include="Scanners\Archives\SevenZipFormatScanner.cs" />
-    <Compile Include="Scanners\Archives\GZipFormatScanner.cs" />
-    <Compile Include="Scanners\Archives\ArchiveFormatScanners.cs" />
-    <Compile Include="Scanners\Archives\ZipFormatScanner.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="OpenMCDF\" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="OpenMcdf" Version="2.2.1.9" />
+		<PackageReference Include="OpenMcdf.Extensions" Version="2.2.1.4" />
+		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+	</ItemGroup>
 
 </Project>

@@ -24,8 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using OpenMcdf;
+
 using Workshell.FileFormats.Formats.Containers;
-using Workshell.FileFormats.OpenMCDF;
 
 namespace Workshell.FileFormats.Scanners.Containers
 {

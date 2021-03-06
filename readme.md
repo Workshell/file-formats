@@ -73,12 +73,12 @@ Take for example the PDF format:
 ```
 public class PDFFormat : FileFormat
 {
-    private static string[] _contentTypes => new[] 
+    private static readonly string[] _contentTypes => new[] 
     { 
         "application/pdf",
         "application/x-pdf"
     };
-    private static string[] _extensions => new[] { "pdf" };
+    private static readonly string[] _extensions => new[] { "pdf" };
 
     public PDFFormat() : base(_contentTypes, _extensions)
     {
@@ -153,6 +153,7 @@ Take a look at the existing formats for reference implementations.
 ||Zip|.zip<br/>.zipx
 |Containers|Java Archive|.jar
 ||NuGet Package|.nupkg
+||Microsoft Installer Database|*.msi
 |eBooks|ePub|.epub
 ||Amazon/MobiPocket eBook|.mobi
 |Executables|Executable and Linkable Format (Linux etc)|.axf<br/>.bin<br/>.elf<br/>.o<br/>.prx<br/>.puff<br/>.ko<br/>.mod<br/>.so
@@ -184,7 +185,8 @@ Take a look at the existing formats for reference implementations.
 ||RealAudio|.rm<br/>.ram
 |Microsoft Office|Access|.mdb<br/>.accdb
 ||Excel Workbook, Template or Add-In|.xls<br/>.xlt<br/>xla
-||Outlook|.pst
+||Outlook Personal Storage Table|.pst
+||Outlook Message|*.msg
 ||PowerPoint Presentation, Template, Slideshow or Add-In|.ppt<br/>.pot<br/>.pps<br/>.ppa
 ||Publisher|.pub
 ||Visio Drawing, Template or Stencil|.vsd<br/>.vst<br/>.vss
@@ -231,16 +233,6 @@ Take a look at the existing formats for reference implementations.
 ||eXtensible Markup Language (XML)|.xml
 
 If you think there's a common format we should cover then please do let us know and we'll try and add support for it.
-
-
-## Attribution
-
-We currently use a modified and internalised variant of OpenMCDF for reading some file formats, especially legacy Microsoft Office files.
-
-The original version of OpenMCDF is available here:
-
-* https://github.com/CodeCavePro/OpenMCDF
-
 
 ## MIT License
 

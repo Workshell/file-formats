@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 using Workshell.FileFormats.Scanners.Archives;
 using Workshell.FileFormats.Scanners.Containers;
@@ -43,6 +44,8 @@ namespace Workshell.FileFormats
 
         static FileFormat()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            
             Scanners = new FileFormatScanners();
 
             // Others
