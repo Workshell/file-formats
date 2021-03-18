@@ -26,6 +26,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Workshell.FileFormats
 {
@@ -78,15 +79,45 @@ namespace Workshell.FileFormats
             return Read<T>(stream,size);
         }
 
+        public static async Task<T> ReadAsync<T>(Stream stream) where T : struct
+        {
+            var size = SizeOf<T>();
+
+            return await ReadAsync<T>(stream,size);
+        }
+
         public static T Read<T>(Stream stream, int size) where T : struct
         {
             return Read<T>(stream,size,false);
+        }
+
+        public static async Task<T> ReadAsync<T>(Stream stream, int size) where T : struct
+        {
+            return await ReadAsync<T>(stream,size,false);
         }
 
         public static T Read<T>(Stream stream, int size, bool allowSmaller) where T : struct
         {
             var buffer = new byte[size];           
             var numRead = stream.Read(buffer,0,buffer.Length);
+
+            if (!allowSmaller && numRead < size)
+            {
+                throw new IOException("Could not read all of structure from stream.");
+            }
+
+            if (numRead < size)
+            {
+                return default(T);
+            }
+
+            return Read<T>(buffer);
+        }
+
+        public static async Task<T> ReadAsync<T>(Stream stream, int size, bool allowSmaller) where T : struct
+        {
+            var buffer = new byte[size];           
+            var numRead = await stream.ReadAsync(buffer,0,buffer.Length);
 
             if (!allowSmaller && numRead < size)
             {
@@ -111,6 +142,15 @@ namespace Workshell.FileFormats
             var buffer = new byte[1];
 
             stream.Read(buffer, 0, buffer.Length);
+
+            return ReadByte(buffer, 0);
+        }
+
+        public static async Task<byte> ReadByteAsync(Stream stream)
+        {
+            var buffer = new byte[1];
+
+            await stream.ReadAsync(buffer, 0, buffer.Length);
 
             return ReadByte(buffer, 0);
         }
@@ -146,6 +186,13 @@ namespace Workshell.FileFormats
             return ReadInt16(buffer, 0, bigEndian);
         }
 
+        public static async Task<short> ReadInt16Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(short));
+
+            return ReadInt16(buffer, 0, bigEndian);
+        }
+
         public static int ReadInt32(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(int))
@@ -173,6 +220,13 @@ namespace Workshell.FileFormats
         public static int ReadInt32(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(int));
+
+            return ReadInt32(buffer, 0, bigEndian);
+        }
+
+        public static async Task<int> ReadInt32Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(int));
 
             return ReadInt32(buffer, 0, bigEndian);
         }
@@ -208,6 +262,13 @@ namespace Workshell.FileFormats
             return ReadInt64(buffer, 0, bigEndian);
         }
 
+        public static async Task<long> ReadInt64Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(long));
+
+            return ReadInt64(buffer, 0, bigEndian);
+        }
+
         public static ushort ReadUInt16(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length < sizeof(ushort))
@@ -235,6 +296,13 @@ namespace Workshell.FileFormats
         public static ushort ReadUInt16(Stream stream, bool bigEndian = false)
         {
             var buffer = ReadBytes(stream, sizeof(ushort));
+
+            return ReadUInt16(buffer, 0, bigEndian);
+        }
+
+        public static async Task<ushort> ReadUInt16Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(ushort));
 
             return ReadUInt16(buffer, 0, bigEndian);
         }
@@ -270,6 +338,13 @@ namespace Workshell.FileFormats
             return ReadUInt32(buffer, 0, bigEndian);
         }
 
+        public static async Task<uint> ReadUInt32Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(uint));
+
+            return ReadUInt32(buffer, 0, bigEndian);
+        }
+
         public static ulong ReadUInt64(byte[] bytes, int startIndex = 0, bool bigEndian = false)
         {
             if (bytes == null || bytes.Length != sizeof(ulong))
@@ -301,6 +376,13 @@ namespace Workshell.FileFormats
             return ReadUInt64(buffer, 0, bigEndian);
         }
 
+        public static async Task<ulong> ReadUInt64Async(Stream stream, bool bigEndian = false)
+        {
+            var buffer = await ReadBytesAsync(stream, sizeof(ulong));
+
+            return ReadUInt64(buffer, 0, bigEndian);
+        }
+
         public static byte[] ReadBytes(byte[] bytes, int size)
         {
             return ReadBytes(bytes, 0, size);
@@ -326,6 +408,17 @@ namespace Workshell.FileFormats
         {
             var buffer = new byte[size];
             var numRead = stream.Read(buffer, 0, size);
+            var result = new byte[numRead];
+
+            Array.Copy(buffer, 0, result, 0, numRead);
+
+            return result;
+        }
+
+        public static async Task<byte[]> ReadBytesAsync(Stream stream, int size)
+        {
+            var buffer = new byte[size];
+            var numRead = await stream.ReadAsync(buffer, 0, size);
             var result = new byte[numRead];
 
             Array.Copy(buffer, 0, result, 0, numRead);
@@ -417,6 +510,24 @@ namespace Workshell.FileFormats
             return string.Empty;
         }
 
+        public static async Task<string> GetFileFromZipAsync(ZipArchive archive, string name)
+        {
+            foreach (var entry in archive.Entries)
+            {
+                if (string.Compare(entry.Name, name, StringComparison.Ordinal) == 0)
+                {
+                    using (var stream = entry.Open())
+                    {
+                        var reader = new StreamReader(stream, Encoding.UTF8, true);
+
+                        return await reader.ReadToEndAsync();
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
         public static string GetFileFromZip(Stream stream, string name)
         {
             try
@@ -424,6 +535,21 @@ namespace Workshell.FileFormats
                 using (var archive = new ZipArchive(stream, ZipArchiveMode.Read, true))
                 {
                     return GetFileFromZip(archive, name);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static async Task<string> GetFileFromZipAsync(Stream stream, string name)
+        {
+            try
+            {
+                using (var archive = new ZipArchive(stream, ZipArchiveMode.Read, true))
+                {
+                    return await GetFileFromZipAsync(archive, name);
                 }
             }
             catch
