@@ -24,13 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Workshell.FileFormats
 {
     public sealed class FileFormatScanJob
     {
-        private const int FourKilobytes = 1024 * 4; // 4K
-
         private readonly FileFormatScanner[] _scanners;
 
         internal FileFormatScanJob(IEnumerable<FileFormatScanner> scanners, byte[] startBytes, byte[] endBytes, Stream stream)
@@ -68,6 +67,37 @@ namespace Workshell.FileFormats
             }
 
             // Return
+            return GetRelevantFileFormat(fingerprints);
+        }
+
+        public async Task<FileFormat> ScanAsync()
+        {
+            var fingerprints = new List<FileFormat>();
+
+            // Run each scanner
+            foreach (var scanner in _scanners)
+            {
+                Stream.Seek(0, SeekOrigin.Begin);
+
+                var fingerprint = await scanner.MatchAsync(this);
+
+                if (fingerprint == null)
+                {
+                    continue;
+                }
+
+                if (!fingerprints.Contains(fingerprint))
+                {
+                    fingerprints.Add(fingerprint);
+                }
+            }
+
+            // Return
+            return GetRelevantFileFormat(fingerprints);
+        }
+
+        private static FileFormat GetRelevantFileFormat(IList<FileFormat> fingerprints)
+        {
             if (fingerprints.Count == 1)
             {
                 return fingerprints.Single();

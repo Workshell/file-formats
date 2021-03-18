@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using Workshell.FileFormats.Scanners.Archives;
 using Workshell.FileFormats.Scanners.Containers;
@@ -73,6 +74,32 @@ namespace Workshell.FileFormats
 
         #region Static Methods
 
+        public static async Task<FileFormat> GetAsync(Stream stream)
+        {
+            // Get first 4K
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var firstBytes = await FileFormatUtils.ReadBytesAsync(stream, FourKilobytes);
+
+            // Get last 4K
+            var lastBytes = firstBytes;
+
+            if (stream.Length > FourKilobytes)
+            {
+                var offset = stream.Length - FourKilobytes;
+
+                stream.Seek(offset, SeekOrigin.Begin);
+
+                lastBytes = await FileFormatUtils.ReadBytesAsync(stream, FourKilobytes);
+            }
+
+            // Perform scan
+            var job = new FileFormatScanJob(Scanners, firstBytes, lastBytes, stream);
+            var fingerprint = await job.ScanAsync();
+
+            return fingerprint;          
+        }
+
         public static FileFormat Get(Stream stream)
         {
             // Get first 4K
@@ -97,6 +124,14 @@ namespace Workshell.FileFormats
             var fingerprint = job.Scan();
 
             return fingerprint;
+        }
+
+        public static async Task<FileFormat> GetAsync(string fileName)
+        {
+            using (var file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                return await GetAsync(file);
+            }
         }
 
         public static FileFormat Get(string fileName)
