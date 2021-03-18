@@ -95,7 +95,7 @@ namespace Workshell.FileFormats
 
             // Perform scan
             var job = new FileFormatScanJob(Scanners, firstBytes, lastBytes, stream);
-            var fingerprint = job.Scan();
+            var fingerprint = await job.ScanAsync();
 
             return fingerprint;          
         }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Workshell.FileFormats
 {
@@ -30,6 +31,11 @@ namespace Workshell.FileFormats
         #region Methods
 
         public abstract FileFormat Match(FileFormatScanJob job);
+
+        public virtual Task<FileFormat> MatchAsync(FileFormatScanJob job)
+        {
+            return Task.FromResult(Match(job));
+        }
 
         #endregion
     }
