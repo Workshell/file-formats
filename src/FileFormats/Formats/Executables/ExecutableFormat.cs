@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Workshell.FileFormats.Formats.Executables
 {
-    public abstract class ExecutableFormat : FileFormat
+    public abstract class ExecutableFormat : FileFormat, IExecutableFormat
     {
         protected ExecutableFormat(IEnumerable<string> contentTypes, IEnumerable<string> extensions, string description) : base(contentTypes, extensions, description)
         {

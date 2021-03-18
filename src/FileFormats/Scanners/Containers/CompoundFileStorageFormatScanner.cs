@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using OpenMcdf;
+using Workshell.OpenMcdf;
 
 using Workshell.FileFormats.Formats.Containers;
 

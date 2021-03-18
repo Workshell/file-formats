@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-using OpenMcdf;
+using Workshell.OpenMcdf;
 
 using Workshell.FileFormats.Formats.Microsoft.Legacy;
 using Workshell.FileFormats.Scanners.Containers;
