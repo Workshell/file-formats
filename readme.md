@@ -234,6 +234,14 @@ Take a look at the existing formats for reference implementations.
 
 If you think there's a common format we should cover then please do let us know and we'll try and add support for it.
 
+## Attribution
+
+We currently use a modified and internalised variant of OpenMCDF for reading some file formats, especially legacy Microsoft Office files.
+
+The original version of OpenMCDF is available here: https://github.com/ironfede/openmcdf
+
+The code remains copyright and licensed to those respective authors.
+
 ## MIT License
 
 Copyright (c) Workshell Ltd

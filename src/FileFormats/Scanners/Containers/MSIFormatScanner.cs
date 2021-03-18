@@ -23,8 +23,8 @@
 using System;
 using System.Collections.Generic;
 
-using OpenMcdf;
-using OpenMcdf.Extensions;
+using Workshell.OpenMcdf;
+using Workshell.OpenMcdf.Extensions;
 
 using Workshell.FileFormats.Formats.Containers;
 

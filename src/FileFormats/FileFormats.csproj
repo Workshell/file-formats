@@ -27,8 +27,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="OpenMcdf" Version="2.2.1.9" />
-		<PackageReference Include="OpenMcdf.Extensions" Version="2.2.1.4" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
 	</ItemGroup>
