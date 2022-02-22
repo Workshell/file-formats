@@ -22,7 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Workshell.FileFormats.Formats;
 
@@ -33,13 +35,13 @@ namespace Workshell.FileFormats.Scanners
         private static readonly byte?[] StartSignature = new byte?[] { 0x25, 0x50, 0x44, 0x46, 0x2D };
         private static readonly IList<byte?[]> EndSignatures = new List<byte?[]>()
         {
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46 },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0A },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0A, 0x20 },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x20 },
-            new byte?[] { 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A, 0x20 }
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46 },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0A },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0D },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0A, 0x20 },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x20 },
+            new byte?[] { 0x25, 0x25, 0x45, 0x4F, 0x46, 0x0D, 0x0A, 0x20 }
         };
         private static readonly int MinEndSignatureLength = EndSignatures.Min(_ => _.Length);
 
@@ -94,23 +96,61 @@ namespace Workshell.FileFormats.Scanners
                 return false;
             }
 
-            var endFound = false;
-
             foreach(var sig in EndSignatures)
             {
                 if (FileFormatUtils.MatchBytes(bytes, bytes.Length - sig.Length, sig))
                 {
-                    endFound = true;
-                    break;
+                    return true;
                 }
             }
 
-            if (!endFound)
-            {
-                return false;
-            }
+            var locker = new object();
+            var matchFound = false;
 
-            return true;
+            // Might as well do this in parallel
+            Parallel.ForEach(EndSignatures, sig =>
+            {
+                lock (locker)
+                {
+                    if (matchFound)
+                    {
+                        return;
+                    }
+                }
+
+                // Could probably replace this with Span<> one day
+                using (var stream = new MemoryStream(bytes))
+                {
+                    var buffer = new byte[sig.Length];
+                    var offset = bytes.Length - sig.Length;
+
+                    while (offset >= 0)
+                    {
+                        stream.Seek(offset, SeekOrigin.Begin);
+
+                        var numRead = stream.Read(buffer, 0, buffer.Length);
+
+                        if (numRead < buffer.Length)
+                        {
+                            break;
+                        }
+
+                        if (FileFormatUtils.MatchBytes(buffer, sig))
+                        {
+                            lock (locker)
+                            {
+                                matchFound = true;
+                            }
+
+                            return;
+                        }
+
+                        offset--;
+                    }
+                }
+            });
+                        
+            return matchFound;
         }
 
         #endregion
