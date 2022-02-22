@@ -42,6 +42,7 @@ namespace Workshell.FileFormats
     public abstract class FileFormat : IFileFormat
     {
         private const int FourKilobytes = 1024 * 4; // 4K
+        private const int SixteenKilobytes = FourKilobytes * 4; // 16K
 
         static FileFormat()
         {
@@ -76,21 +77,21 @@ namespace Workshell.FileFormats
 
         public static async Task<FileFormat> GetAsync(Stream stream)
         {
-            // Get first 4K
+            // Get first 16K
             stream.Seek(0, SeekOrigin.Begin);
 
-            var firstBytes = await FileFormatUtils.ReadBytesAsync(stream, FourKilobytes);
+            var firstBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes);
 
-            // Get last 4K
+            // Get last 16K
             var lastBytes = firstBytes;
 
-            if (stream.Length > FourKilobytes)
+            if (stream.Length > SixteenKilobytes)
             {
-                var offset = stream.Length - FourKilobytes;
+                var offset = stream.Length - SixteenKilobytes;
 
                 stream.Seek(offset, SeekOrigin.Begin);
 
-                lastBytes = await FileFormatUtils.ReadBytesAsync(stream, FourKilobytes);
+                lastBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes);
             }
 
             // Perform scan
@@ -102,21 +103,21 @@ namespace Workshell.FileFormats
 
         public static FileFormat Get(Stream stream)
         {
-            // Get first 4K
+            // Get first 16K
             stream.Seek(0, SeekOrigin.Begin);
 
-            var firstBytes = FileFormatUtils.ReadBytes(stream, FourKilobytes);
+            var firstBytes = FileFormatUtils.ReadBytes(stream, SixteenKilobytes);
 
-            // Get last 4K
+            // Get last 16K
             var lastBytes = firstBytes;
 
-            if (stream.Length > FourKilobytes)
+            if (stream.Length > SixteenKilobytes)
             {
-                var offset = stream.Length - FourKilobytes;
+                var offset = stream.Length - SixteenKilobytes;
 
                 stream.Seek(offset, SeekOrigin.Begin);
 
-                lastBytes = FileFormatUtils.ReadBytes(stream, FourKilobytes);
+                lastBytes = FileFormatUtils.ReadBytes(stream, SixteenKilobytes);
             }
 
             // Perform scan
