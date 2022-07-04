@@ -483,7 +483,33 @@ namespace Workshell.FileFormats.Tests
                 Assert.True(fingerprint is OutlookMessageFormat);
             }
         }
-        
+
+        #endregion
+
+        #region Encrypted Documents
+
+        [Test]
+        public void Office_Encrypted_Document_Returns_Not_Null()
+        {
+            using (var stream = GetFileFromZip("microsoft/ooxml/enc-test.docx"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.IsNotNull(fingerprint);
+            }
+        }
+
+        [Test]
+        public void Office_Encrypted_Document_Is_Correct_Format()
+        {
+            using (var stream = GetFileFromZip("microsoft/ooxml/enc-test.docx"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.True(fingerprint is EncryptedDocumentFormat);
+            }
+        }
+
         #endregion
     }
 }
