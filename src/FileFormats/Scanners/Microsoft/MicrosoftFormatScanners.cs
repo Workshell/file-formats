@@ -40,7 +40,8 @@ namespace Workshell.FileFormats.Scanners.Microsoft
             new AccessDatabaseFormatScanner(),
             new PublisherFormatScanner(),
             new OutlookPSTFormatScanner(),
-            new OutlookMessageFormatScanner()
+            new OutlookMessageFormatScanner(),
+            new EncryptedDocumentFormatScanner()
         };
 
         #region Methods
