@@ -23,8 +23,6 @@
 using System;
 using System.IO;
 
-using Workshell.FileFormats.Formats;
-
 namespace Workshell.FileFormats.Demonstration
 {
     class Program
