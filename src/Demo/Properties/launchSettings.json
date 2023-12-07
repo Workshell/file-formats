@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Demo": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Projects\\Workshell\\File Formats\\samples\\test.json\""
     }
   }
 }

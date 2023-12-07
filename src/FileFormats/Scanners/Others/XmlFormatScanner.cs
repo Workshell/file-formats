@@ -28,7 +28,7 @@ using Workshell.FileFormats.Formats;
 
 namespace Workshell.FileFormats.Scanners
 {
-    public class XmlFormatScanner : FileFormatScanner
+    public class XmlFormatScanner : TextFormatScanner
     {
         #region Methods
 
@@ -46,6 +46,11 @@ namespace Workshell.FileFormats.Scanners
 
         protected virtual bool Validate(FileFormatScanJob job)
         {
+            if (!ValidateStartBytes(job.StartBytes))
+            {
+                return false;
+            }
+
             try
             {
                 XDocument.Load(job.Stream);

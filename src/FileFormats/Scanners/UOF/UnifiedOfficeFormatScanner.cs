@@ -44,6 +44,11 @@ namespace Workshell.FileFormats.Scanners.UOF
         {
             try
             {
+                if (!ValidateStartBytes(job.StartBytes))
+                {
+                    return null;
+                }
+
                 var xml = XDocument.Load(job.Stream);
 
                 if (xml.Root == null)

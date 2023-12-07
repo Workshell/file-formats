@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Workshell.FileFormats
@@ -70,13 +71,15 @@ namespace Workshell.FileFormats
             return GetRelevantFileFormat(fingerprints);
         }
 
-        public async Task<FileFormat> ScanAsync()
+        public async Task<FileFormat> ScanAsync(CancellationToken cancellationToken = default)
         {
             var fingerprints = new List<FileFormat>();
 
             // Run each scanner
             foreach (var scanner in _scanners)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 Stream.Seek(0, SeekOrigin.Begin);
 
                 var fingerprint = await scanner.MatchAsync(this);
@@ -98,19 +101,14 @@ namespace Workshell.FileFormats
 
         private static FileFormat GetRelevantFileFormat(IList<FileFormat> fingerprints)
         {
-            if (fingerprints.Count == 1)
+            if (fingerprints.Count == 0)
             {
-                return fingerprints.Single();
+                return null;
             }
 
-            if (fingerprints.Count > 1)
-            {
-                var orderedFingerprints = fingerprints.OrderByDescending(fingerprint => fingerprint.SortIndex);
+            var orderedFingerprints = fingerprints.OrderByDescending(fingerprint => fingerprint.SortIndex);
 
-                return orderedFingerprints.First();
-            }
-
-            return null;
+            return orderedFingerprints.First();
         }
 
         #endregion

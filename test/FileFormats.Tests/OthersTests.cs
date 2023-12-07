@@ -137,5 +137,57 @@ namespace Workshell.FileFormats.Tests
         }
 
         #endregion
+
+        #region JSON
+
+        [Test]
+        public void Others_Json_Returns_Not_Null()
+        {
+            using (var stream = GetFileFromZip("test.json"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.IsNotNull(fingerprint);
+            }
+        }
+
+        [Test]
+        public void Others_Json_Is_Correct_Format()
+        {
+            using (var stream = GetFileFromZip("test.json"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.True(fingerprint is JsonFormat);
+            }
+        }
+
+        #endregion
+
+        #region Text
+
+        [Test]
+        public void Others_Text_Returns_Not_Null()
+        {
+            using (var stream = GetFileFromZip("test.txt"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.IsNotNull(fingerprint);
+            }
+        }
+
+        [Test]
+        public void Others_Text_Is_Correct_Format()
+        {
+            using (var stream = GetFileFromZip("test.txt"))
+            {
+                var fingerprint = FileFormat.Get(stream);
+
+                Assert.True(fingerprint is TextFormat);
+            }
+        }
+
+        #endregion
     }
 }

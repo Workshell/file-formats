@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Workshell.FileFormats.Formats
 {
-    public interface IXmlFormat : IFileFormat
+    public interface IXmlFormat : ITextFormat
     {
     }
 }
