@@ -29,8 +29,10 @@ namespace Workshell.FileFormats.Scanners.Microsoft
     {
         private static readonly FileFormatScanner[] _scanners = new FileFormatScanner[]
         {
+            new TextFormatScanner(),
             new PDFFormatScanner(),
             new XmlFormatScanner(),
+            new JsonFormatScanner(),
             new AnimatedCursorFormatScanner(),
             new FlashFormatScanner(),
         };

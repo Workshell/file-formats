@@ -32,9 +32,11 @@ namespace Workshell.FileFormats
 
         public abstract FileFormat Match(FileFormatScanJob job);
 
-        public virtual Task<FileFormat> MatchAsync(FileFormatScanJob job)
+        public virtual async Task<FileFormat> MatchAsync(FileFormatScanJob job)
         {
-            return Task.FromResult(Match(job));
+            var format = await Task.Run(() => Match(job));
+
+            return format;
         }
 
         #endregion

@@ -42,7 +42,7 @@ namespace Workshell.FileFormats.Formats
 
         #region Properties
 
-        public override int SortIndex => 10;
+        public override int SortIndex => 15;
 
         #endregion
     }

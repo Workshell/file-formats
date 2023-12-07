@@ -26,6 +26,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Workshell.FileFormats
@@ -79,11 +80,11 @@ namespace Workshell.FileFormats
             return Read<T>(stream,size);
         }
 
-        public static async Task<T> ReadAsync<T>(Stream stream) where T : struct
+        public static async Task<T> ReadAsync<T>(Stream stream, CancellationToken cancellationToken) where T : struct
         {
             var size = SizeOf<T>();
 
-            return await ReadAsync<T>(stream,size);
+            return await ReadAsync<T>(stream, size, cancellationToken);
         }
 
         public static T Read<T>(Stream stream, int size) where T : struct
@@ -91,15 +92,15 @@ namespace Workshell.FileFormats
             return Read<T>(stream,size,false);
         }
 
-        public static async Task<T> ReadAsync<T>(Stream stream, int size) where T : struct
+        public static async Task<T> ReadAsync<T>(Stream stream, int size, CancellationToken cancellationToken) where T : struct
         {
-            return await ReadAsync<T>(stream,size,false);
+            return await ReadAsync<T>(stream, size, false, cancellationToken);
         }
 
         public static T Read<T>(Stream stream, int size, bool allowSmaller) where T : struct
         {
             var buffer = new byte[size];           
-            var numRead = stream.Read(buffer,0,buffer.Length);
+            var numRead = stream.Read(buffer, 0, buffer.Length);
 
             if (!allowSmaller && numRead < size)
             {
@@ -114,10 +115,10 @@ namespace Workshell.FileFormats
             return Read<T>(buffer);
         }
 
-        public static async Task<T> ReadAsync<T>(Stream stream, int size, bool allowSmaller) where T : struct
+        public static async Task<T> ReadAsync<T>(Stream stream, int size, bool allowSmaller, CancellationToken cancellationToken) where T : struct
         {
             var buffer = new byte[size];           
-            var numRead = await stream.ReadAsync(buffer,0,buffer.Length);
+            var numRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
 
             if (!allowSmaller && numRead < size)
             {
@@ -146,11 +147,11 @@ namespace Workshell.FileFormats
             return ReadByte(buffer, 0);
         }
 
-        public static async Task<byte> ReadByteAsync(Stream stream)
+        public static async Task<byte> ReadByteAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             var buffer = new byte[1];
 
-            await stream.ReadAsync(buffer, 0, buffer.Length);
+            await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
 
             return ReadByte(buffer, 0);
         }
@@ -186,9 +187,9 @@ namespace Workshell.FileFormats
             return ReadInt16(buffer, 0, bigEndian);
         }
 
-        public static async Task<short> ReadInt16Async(Stream stream, bool bigEndian = false)
+        public static async Task<short> ReadInt16Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(short));
+            var buffer = await ReadBytesAsync(stream, sizeof(short), cancellationToken);
 
             return ReadInt16(buffer, 0, bigEndian);
         }
@@ -224,9 +225,9 @@ namespace Workshell.FileFormats
             return ReadInt32(buffer, 0, bigEndian);
         }
 
-        public static async Task<int> ReadInt32Async(Stream stream, bool bigEndian = false)
+        public static async Task<int> ReadInt32Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(int));
+            var buffer = await ReadBytesAsync(stream, sizeof(int), cancellationToken);
 
             return ReadInt32(buffer, 0, bigEndian);
         }
@@ -262,9 +263,9 @@ namespace Workshell.FileFormats
             return ReadInt64(buffer, 0, bigEndian);
         }
 
-        public static async Task<long> ReadInt64Async(Stream stream, bool bigEndian = false)
+        public static async Task<long> ReadInt64Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(long));
+            var buffer = await ReadBytesAsync(stream, sizeof(long), cancellationToken);
 
             return ReadInt64(buffer, 0, bigEndian);
         }
@@ -300,9 +301,9 @@ namespace Workshell.FileFormats
             return ReadUInt16(buffer, 0, bigEndian);
         }
 
-        public static async Task<ushort> ReadUInt16Async(Stream stream, bool bigEndian = false)
+        public static async Task<ushort> ReadUInt16Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(ushort));
+            var buffer = await ReadBytesAsync(stream, sizeof(ushort), cancellationToken);
 
             return ReadUInt16(buffer, 0, bigEndian);
         }
@@ -338,9 +339,9 @@ namespace Workshell.FileFormats
             return ReadUInt32(buffer, 0, bigEndian);
         }
 
-        public static async Task<uint> ReadUInt32Async(Stream stream, bool bigEndian = false)
+        public static async Task<uint> ReadUInt32Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(uint));
+            var buffer = await ReadBytesAsync(stream, sizeof(uint), cancellationToken);
 
             return ReadUInt32(buffer, 0, bigEndian);
         }
@@ -376,9 +377,9 @@ namespace Workshell.FileFormats
             return ReadUInt64(buffer, 0, bigEndian);
         }
 
-        public static async Task<ulong> ReadUInt64Async(Stream stream, bool bigEndian = false)
+        public static async Task<ulong> ReadUInt64Async(Stream stream, bool bigEndian = false, CancellationToken cancellationToken = default)
         {
-            var buffer = await ReadBytesAsync(stream, sizeof(ulong));
+            var buffer = await ReadBytesAsync(stream, sizeof(ulong), cancellationToken);
 
             return ReadUInt64(buffer, 0, bigEndian);
         }
@@ -415,10 +416,10 @@ namespace Workshell.FileFormats
             return result;
         }
 
-        public static async Task<byte[]> ReadBytesAsync(Stream stream, int size)
+        public static async Task<byte[]> ReadBytesAsync(Stream stream, int size, CancellationToken cancellationToken)
         {
             var buffer = new byte[size];
-            var numRead = await stream.ReadAsync(buffer, 0, size);
+            var numRead = await stream.ReadAsync(buffer, 0, size, cancellationToken);
             var result = new byte[numRead];
 
             Array.Copy(buffer, 0, result, 0, numRead);
@@ -479,7 +480,7 @@ namespace Workshell.FileFormats
 
         public static bool IsNullOrEmpty<T>(T[] array)
         {
-            if (array == null)
+            if (array is null)
             {
                 return true;
             }
@@ -498,30 +499,26 @@ namespace Workshell.FileFormats
             {
                 if (string.Compare(entry.Name, name, StringComparison.Ordinal) == 0)
                 {
-                    using (var stream = entry.Open())
-                    {
-                        var reader = new StreamReader(stream, Encoding.UTF8, true);
+                    var stream = entry.Open();
+                    using var reader = new StreamReader(stream, Encoding.UTF8, true);
 
-                        return reader.ReadToEnd();
-                    }
+                    return reader.ReadToEnd();
                 }
             }
 
             return string.Empty;
         }
 
-        public static async Task<string> GetFileFromZipAsync(ZipArchive archive, string name)
+        public static async Task<string> GetFileFromZipAsync(ZipArchive archive, string name, CancellationToken cancellationToken)
         {
             foreach (var entry in archive.Entries)
             {
                 if (string.Compare(entry.Name, name, StringComparison.Ordinal) == 0)
                 {
-                    using (var stream = entry.Open())
-                    {
-                        var reader = new StreamReader(stream, Encoding.UTF8, true);
+                    var stream = entry.Open();
+                    using var reader = new StreamReader(stream, Encoding.UTF8, true);
 
-                        return await reader.ReadToEndAsync();
-                    }
+                    return await reader.ReadToEndAsync();
                 }
             }
 
@@ -532,10 +529,9 @@ namespace Workshell.FileFormats
         {
             try
             {
-                using (var archive = new ZipArchive(stream, ZipArchiveMode.Read, true))
-                {
-                    return GetFileFromZip(archive, name);
-                }
+                using var archive = new ZipArchive(stream, ZipArchiveMode.Read, true);
+                
+                return GetFileFromZip(archive, name);
             }
             catch
             {
@@ -543,14 +539,13 @@ namespace Workshell.FileFormats
             }
         }
 
-        public static async Task<string> GetFileFromZipAsync(Stream stream, string name)
+        public static async Task<string> GetFileFromZipAsync(Stream stream, string name, CancellationToken cancellationToken)
         {
             try
             {
-                using (var archive = new ZipArchive(stream, ZipArchiveMode.Read, true))
-                {
-                    return await GetFileFromZipAsync(archive, name);
-                }
+                using var archive = new ZipArchive(stream, ZipArchiveMode.Read, true);
+
+                return await GetFileFromZipAsync(archive, name, cancellationToken);
             }
             catch
             {

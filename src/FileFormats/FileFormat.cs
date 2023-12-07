@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Workshell.FileFormats.Scanners.Archives;
@@ -75,12 +76,12 @@ namespace Workshell.FileFormats
 
         #region Static Methods
 
-        public static async Task<FileFormat> GetAsync(Stream stream)
+        public static async Task<FileFormat> GetAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             // Get first 16K
             stream.Seek(0, SeekOrigin.Begin);
 
-            var firstBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes);
+            var firstBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes, cancellationToken);
 
             // Get last 16K
             var lastBytes = firstBytes;
@@ -91,12 +92,12 @@ namespace Workshell.FileFormats
 
                 stream.Seek(offset, SeekOrigin.Begin);
 
-                lastBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes);
+                lastBytes = await FileFormatUtils.ReadBytesAsync(stream, SixteenKilobytes, cancellationToken);
             }
 
             // Perform scan
             var job = new FileFormatScanJob(Scanners, firstBytes, lastBytes, stream);
-            var fingerprint = await job.ScanAsync();
+            var fingerprint = await job.ScanAsync(cancellationToken);
 
             return fingerprint;          
         }
@@ -127,20 +128,18 @@ namespace Workshell.FileFormats
             return fingerprint;
         }
 
-        public static async Task<FileFormat> GetAsync(string fileName)
+        public static async Task<FileFormat> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            using (var file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return await GetAsync(file);
-            }
+            using var file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            
+            return await GetAsync(file, cancellationToken);
         }
 
         public static FileFormat Get(string fileName)
         {
-            using (var file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Get(file);
-            }
+            using var file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            
+            return Get(file);
         }
 
         #endregion
